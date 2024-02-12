@@ -53,15 +53,6 @@ public class GameController {
             board.setCurrentPlayer(next);
         }
         board.setCounter(board.getCounter() + 1);
-        // TODO Assignment V1: method should be implemented by the students:
-        //   - the current player should be moved to the given space
-        //     (if it is free()
-        //   - and the current player should be set to the player
-        //     following the current player
-        //   - the counter of moves in the game should be increased by one
-        //     if and when the player is moved (the counter and the status line
-        //     message needs to be implemented at another place)
-
     }
 
     // XXX: V2
@@ -69,7 +60,6 @@ public class GameController {
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
         board.setStep(0);
-
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             Player player = board.getPlayer(i);
             if (player != null) {
@@ -131,7 +121,9 @@ public class GameController {
         continuePrograms();
     }
 
-    // XXX: V2
+    /**
+     *
+     */
     public void executeStep() {
         board.setStepMode(true);
         continuePrograms();
@@ -144,7 +136,9 @@ public class GameController {
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
     }
 
-    // XXX: V2
+    /**
+     * Execute next step
+     */
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
@@ -178,7 +172,11 @@ public class GameController {
         }
     }
 
-    // XXX: V2
+    /**
+     * Execute the command
+     * @param player Player
+     * @param command Command
+     */
     private void executeCommand(@NotNull Player player, Command command) {
         if (player != null && player.board == board && command != null) {
             // XXX This is a very simplistic way of dealing with some basic cards and
@@ -204,30 +202,66 @@ public class GameController {
         }
     }
 
-    // TODO Assignment V2
+    /**
+     * This makes player move  forward
+     * @param player Player
+     */
     public void moveForward(@NotNull Player player) {
-
+        System.out.println("++++++++  moveForward");
+        Space current = player.getSpace();
+        Space target = board.getNeighbour(current, player.getHeading());
+        player.setSpace(target);
     }
 
-    // TODO Assignment V2
+    /**
+     * This makes player move  forward twice
+     * @param player Player
+     */
     public void fastForward(@NotNull Player player) {
-
+        System.out.println("++++++++  fastForward");
+        Space current = player.getSpace();
+        Space target = board.getNeighbour(current, player.getHeading());
+        target = board.getNeighbour(target, player.getHeading());
+        player.setSpace(target);
     }
 
-    // TODO Assignment V2
+    /**
+     * This makes player turn to right
+     * @param player Player
+     */
     public void turnRight(@NotNull Player player) {
-
+        System.out.println("++++++++  turnRight");
+        if(player.getHeading() == Heading.SOUTH)
+            player.setHeading(Heading.WEST);
+        else if(player.getHeading() == Heading.NORTH)
+            player.setHeading(Heading.EAST);
+        else if(player.getHeading() == Heading.WEST)
+            player.setHeading(Heading.NORTH);
+        else
+            player.setHeading(Heading.SOUTH);
     }
 
-    // TODO Assignment V2
+    /**
+     * This makes player turn to left
+     * @param player Player
+     */
     public void turnLeft(@NotNull Player player) {
-
+        System.out.println("++++++++  turnLeft");
+        if(player.getHeading() == Heading.SOUTH)
+            player.setHeading(Heading.EAST);
+        else if(player.getHeading() == Heading.NORTH)
+            player.setHeading(Heading.WEST);
+        else if(player.getHeading() == Heading.WEST)
+            player.setHeading(Heading.SOUTH);
+        else
+            player.setHeading(Heading.NORTH);
     }
 
     public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {
         CommandCard sourceCard = source.getCard();
         CommandCard targetCard = target.getCard();
         if (sourceCard != null && targetCard == null) {
+            System.out.println("++++++++  233");
             target.setCard(sourceCard);
             source.setCard(null);
             return true;
