@@ -33,7 +33,7 @@ package dk.dtu.compute.se.pisd.roborally;
 public class StartRoboRally {
 
     /**
-     * main method of StartRoboRally
+     * public static void main method of StartRoboRally
      * @param args String[]
      */
     public static void main(String[] args) {
