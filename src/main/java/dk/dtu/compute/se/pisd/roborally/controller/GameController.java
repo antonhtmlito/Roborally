@@ -135,7 +135,33 @@ public class GameController {
             executeNextStep();
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
     }
+    // XXX: V3
+    public void executeCommandOptionAndContinue(@NotNull Command option) {
+        Player currentPlayer = board.getCurrentPlayer();
+        if (currentPlayer != null &&
+                board.getPhase() == Phase.PLAYER_INTERACTION &&
+                option != null){
+                board.setPhase(Phase.ACTIVATION);
+                executeCommand(currentPlayer, option);
 
+                int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
+                if (nextPlayerNumber < board.getPlayersNumber()); {
+                    board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
+            }
+        } else {
+           int step = board.getStep() +1;
+
+           if (step < Player.NO_REGISTERS){
+               makeProgramFieldsVisible(step);
+               board.setStep(step);
+               board.setCurrentPlayer(board.getPlayer(0));
+           } else {
+               startProgrammingPhase();
+           }
+
+        }
+
+    }
     /**
      * Execute next step
      */
