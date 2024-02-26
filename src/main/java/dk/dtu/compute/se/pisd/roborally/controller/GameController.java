@@ -147,6 +147,11 @@ public class GameController {
                 CommandCard card = currentPlayer.getProgramField(step).getCard();
                 if (card != null) {
                     Command command = card.command;
+                    if (command.isInteractive()) {
+                    board.setPhase(Phase.PLAYER_INTERACTION);
+                    return;
+                    }
+
                     executeCommand(currentPlayer, command);
                 }
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
@@ -203,7 +208,8 @@ public class GameController {
     }
 
     /**
-     * This makes player move  forward
+     * This makes player move forward
+     *
      * @param player Player
      */
     public void moveForward(@NotNull Player player) {
@@ -214,7 +220,7 @@ public class GameController {
     }
 
     /**
-     * This makes player move  forward twice
+     * This makes player move forward twice
      * @param player Player
      */
     public void fastForward(@NotNull Player player) {
@@ -226,7 +232,7 @@ public class GameController {
     }
 
     /**
-     * This makes player turn to right
+     * This makes player turn to right (Clockwise)
      * @param player Player
      */
     public void turnRight(@NotNull Player player) {
@@ -242,7 +248,7 @@ public class GameController {
     }
 
     /**
-     * This makes player turn to left
+     * This makes player turn to left (Counter-Clockwise)
      * @param player Player
      */
     public void turnLeft(@NotNull Player player) {
@@ -257,6 +263,13 @@ public class GameController {
             player.setHeading(Heading.NORTH);
     }
 
+    /**
+     * Moving the cards from the source to the target in the programming phase.
+     *
+     * @param source The set of cards the player has available
+     * @param target The current player
+     * @return
+     */
     public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {
         CommandCard sourceCard = source.getCard();
         CommandCard targetCard = target.getCard();

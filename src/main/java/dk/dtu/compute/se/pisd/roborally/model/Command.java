@@ -42,8 +42,22 @@ public enum Command {
 
     final public String displayName;
 
-    Command(String displayName) {
+    //Command(String displayName) {
+    //    this.displayName = displayName;
+    //}
+
+    final private List<Command> options;
+
+    Command(String displayName, Command... options) {
         this.displayName = displayName;
+        this.options = Collections.unmodifiableList(Arrays.asList(options));
     }
 
+    public boolean isInteractive() {
+        return !options.isEmpty();
+    }
+
+    public List<Command> getOptions() {
+        return options;
+    }
 }
