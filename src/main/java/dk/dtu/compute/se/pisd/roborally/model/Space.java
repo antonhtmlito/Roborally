@@ -24,7 +24,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 /**
- * ...
+ * Space class of the Roborally game
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -38,6 +38,12 @@ public class Space extends Subject {
 
     private Player player;
 
+    /**
+     * Constructor of Space
+     * @param board Board
+     * @param x int
+     * @param y int
+     */
     public Space(Board board, int x, int y) {
         this.board = board;
         this.x = x;
@@ -45,10 +51,18 @@ public class Space extends Subject {
         player = null;
     }
 
+    /**
+     * Get player
+     * @return Player
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * Set player
+     * @param player Player
+     */
     public void setPlayer(Player player) {
         Player oldPlayer = this.player;
         if (player != oldPlayer &&
@@ -65,6 +79,9 @@ public class Space extends Subject {
         }
     }
 
+    /**
+     * notify PlayerChanged
+     */
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space
         // also need to update when some player attributes change, the player can

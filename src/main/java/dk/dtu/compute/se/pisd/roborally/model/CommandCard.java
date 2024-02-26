@@ -25,7 +25,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ...
+ * CommandCard class
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -34,10 +34,18 @@ public class CommandCard extends Subject {
 
     final public Command command;
 
+    /**
+     * Constructor of CommandCard
+     * @param command Command
+     */
     public CommandCard(@NotNull Command command) {
         this.command = command;
     }
 
+    /**
+     * Get the name
+     * @return String
+     */
     public String getName() {
         return command.displayName;
     }

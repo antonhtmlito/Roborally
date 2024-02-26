@@ -22,7 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 /**
- * ...
+ * Heading class of the Roborally game
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -31,10 +31,18 @@ public enum Heading {
 
     SOUTH, WEST, NORTH, EAST;
 
+    /**
+     * Get next Heading
+     * @return Heading
+     */
     public Heading next() {
         return values()[(this.ordinal() + 1) % values().length];
     }
 
+    /**
+     * Get previous Heading
+     * @return Heading
+     */
     public Heading prev() {
         return values()[(this.ordinal() + values().length - 1) % values().length];
     }

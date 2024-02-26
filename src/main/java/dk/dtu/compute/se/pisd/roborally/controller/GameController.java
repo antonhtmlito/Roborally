@@ -19,6 +19,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  */
+/**
+ * dk.dtu.compute.se.pisd.roborally.controller is group of controller classes
+ */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.roborally.model.*;
@@ -26,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * ...
- *
+ * This is the class that controls the game
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
@@ -56,6 +59,10 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * This method starts the programming phase
+     */
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
@@ -78,12 +85,16 @@ public class GameController {
     }
 
     // XXX: V2
+
     private CommandCard generateRandomCommandCard() {
         Command[] commands = Command.values();
         int random = (int) (Math.random() * commands.length);
         return new CommandCard(commands[random]);
     }
 
+    /**
+     * This concludes the programming phase
+     */
     // XXX: V2
     public void finishProgrammingPhase() {
         makeProgramFieldsInvisible();
@@ -94,6 +105,7 @@ public class GameController {
     }
 
     // XXX: V2
+
     private void makeProgramFieldsVisible(int register) {
         if (register >= 0 && register < Player.NO_REGISTERS) {
             for (int i = 0; i < board.getPlayersNumber(); i++) {
@@ -116,13 +128,17 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * This method executes the programs.
+     */
     public void executePrograms() {
         board.setStepMode(false);
         continuePrograms();
     }
 
     /**
-     *
+     * This method executes the next step.
      */
     public void executeStep() {
         board.setStepMode(true);
@@ -136,6 +152,11 @@ public class GameController {
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
     }
     // XXX: V3
+
+    /**
+     * This method executes the command option and continues.
+     * @param option Command
+     */
     public void executeCommandOptionAndContinue(@NotNull Command option) {
         Player currentPlayer = board.getCurrentPlayer();
         if (currentPlayer != null &&

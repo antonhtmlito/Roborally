@@ -24,7 +24,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 /**
- * ...
+ * CommandCardField class
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -37,16 +37,28 @@ public class CommandCardField extends Subject {
 
     private boolean visible;
 
+    /**
+     * Constructor of CommandCardField
+     * @param player Player
+     */
     public CommandCardField(Player player) {
         this.player = player;
         this. card = null;
         this.visible = true;
     }
 
+    /**
+     * Get CommandCard
+     * @return CommandCard
+     */
     public CommandCard getCard() {
         return card;
     }
 
+    /**
+     * Set the CommandCard
+     * @param card CommandCard
+     */
     public void setCard(CommandCard card) {
         if (card != this.card) {
             this.card = card;
@@ -54,10 +66,18 @@ public class CommandCardField extends Subject {
         }
     }
 
+    /**
+     * Check if it is visible
+     * @return boolean
+     */
     public boolean isVisible() {
         return visible;
     }
 
+    /**
+     * Set visible
+     * @param visible boolean
+     */
     public void setVisible(boolean visible) {
         if (visible != this.visible) {
             this.visible = visible;

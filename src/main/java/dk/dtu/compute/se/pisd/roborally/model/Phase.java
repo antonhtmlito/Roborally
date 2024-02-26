@@ -22,7 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 /**
- * ...
+ * Phase enum of the Roborally game
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *

@@ -19,6 +19,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  */
+/**
+ * dk.dtu.compute.se.pisd.roborally.controller is group of controller classes
+ */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
@@ -41,7 +44,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * ...
+ * AppController class contains methods for controlling the Roborally app
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -55,10 +58,17 @@ public class AppController implements Observer {
 
     private GameController gameController;
 
+    /**
+     * Constructor of the AppController class
+     * @param roboRally
+     */
     public AppController(@NotNull RoboRally roboRally) {
         this.roboRally = roboRally;
     }
 
+    /**
+     * Initialize the parameters for new game
+     */
     public void newGame() {
         ChoiceDialog<Integer> dialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
         dialog.setTitle("Player number");
@@ -93,6 +103,9 @@ public class AppController implements Observer {
         }
     }
 
+    /**
+     * Save game
+     */
     public void saveGame() {
         // XXX needs to be implemented eventually
     }
@@ -127,6 +140,9 @@ public class AppController implements Observer {
         return false;
     }
 
+    /**
+     * Exit from the running game
+     */
     public void exit() {
         if (gameController != null) {
             Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -146,11 +162,19 @@ public class AppController implements Observer {
         }
     }
 
+    /**
+     * Check if the game is running
+     * @return boolean, TRUE if the game is running, otherwise FALSE
+     */
     public boolean isGameRunning() {
         return gameController != null;
     }
 
 
+    /**
+     *
+     * @param subject the subject which changed
+     */
     @Override
     public void update(Subject subject) {
         // XXX do nothing for now

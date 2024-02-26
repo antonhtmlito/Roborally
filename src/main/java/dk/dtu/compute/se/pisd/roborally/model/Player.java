@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
 
 /**
- * ...
+ * Player class of the Roborally game
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -48,6 +48,12 @@ public class Player extends Subject {
     private CommandCardField[] program;
     private CommandCardField[] cards;
 
+    /**
+     * Constructor of Player class
+     * @param board Board
+     * @param color String
+     * @param name String
+     */
     public Player(@NotNull Board board, String color, @NotNull String name) {
         this.board = board;
         this.name = name;
@@ -66,10 +72,18 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * Get name
+     * @return String
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Set the name
+     * @param name String
+     */
     public void setName(String name) {
         if (name != null && !name.equals(this.name)) {
             this.name = name;
@@ -80,10 +94,18 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * Get color
+     * @return String
+     */
     public String getColor() {
         return color;
     }
 
+    /**
+     * Set color
+     * @param color String
+     */
     public void setColor(String color) {
         this.color = color;
         notifyChange();
@@ -92,10 +114,18 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * Get space
+     * @return Space
+     */
     public Space getSpace() {
         return space;
     }
 
+    /**
+     * Set space
+     * @param space Space
+     */
     public void setSpace(Space space) {
         Space oldSpace = this.space;
         if (space != oldSpace &&
@@ -111,10 +141,18 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * Get Heading
+     * @return Heading
+     */
     public Heading getHeading() {
         return heading;
     }
 
+    /**
+     * Set Heading
+     * @param heading Heading
+     */
     public void setHeading(@NotNull Heading heading) {
         if (heading != this.heading) {
             this.heading = heading;
@@ -125,10 +163,20 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * Get program field
+     * @param i int
+     * @return CommandCardField
+     */
     public CommandCardField getProgramField(int i) {
         return program[i];
     }
 
+    /**
+     * Get card field
+     * @param i int
+     * @return CommandCardField
+     */
     public CommandCardField getCardField(int i) {
         return cards[i];
     }

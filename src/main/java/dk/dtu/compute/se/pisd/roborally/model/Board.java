@@ -30,7 +30,7 @@ import java.util.List;
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 
 /**
- * ...
+ * This is the Board class for the Roborally game.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -57,6 +57,12 @@ public class Board extends Subject {
 
     private boolean stepMode;
 
+    /**
+     * This is a constructor of the Board class.
+     * @param width int
+     * @param height int
+     * @param boardName String
+     */
     public Board(int width, int height, @NotNull String boardName) {
         this.boardName = boardName;
         this.width = width;
@@ -70,15 +76,27 @@ public class Board extends Subject {
         }
         this.stepMode = false;
     }
-
+    /**
+     * This is a constructor of the Board class.
+     * @param width int
+     * @param height int
+     */
     public Board(int width, int height) {
         this(width, height, "defaultboard");
     }
 
+    /**
+     * This method gets the GameId.
+     * @return Integer
+     */
     public Integer getGameId() {
         return gameId;
     }
 
+    /**
+     * This method sets the GameId.
+     * @param gameId int
+     */
     public void setGameId(int gameId) {
         if (this.gameId == null) {
             this.gameId = gameId;
@@ -89,6 +107,12 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * This method gets the space.
+     * @param x int
+     * @param y int
+     * @return Space
+     */
     public Space getSpace(int x, int y) {
         if (x >= 0 && x < width &&
                 y >= 0 && y < height) {
@@ -98,10 +122,18 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * This method gets the Players number.
+     * @return int
+     */
     public int getPlayersNumber() {
         return players.size();
     }
 
+    /**
+     * This method adds a Player
+     * @param player Player
+     */
     public void addPlayer(@NotNull Player player) {
         if (player.board == this && !players.contains(player)) {
             players.add(player);
@@ -109,6 +141,11 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * This method gets the Player with index i
+     * @param i int
+     * @return Player
+     */
     public Player getPlayer(int i) {
         if (i >= 0 && i < players.size()) {
             return players.get(i);
@@ -117,10 +154,18 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * Get current player
+     * @return Player
+     */
     public Player getCurrentPlayer() {
         return current;
     }
 
+    /**
+     * Set current Player
+     * @param player Player
+     */
     public void setCurrentPlayer(Player player) {
         if (player != this.current && players.contains(player)) {
             this.current = player;
@@ -128,10 +173,18 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * Get Phase
+     * @return Phase
+     */
     public Phase getPhase() {
         return phase;
     }
 
+    /**
+     * Set Phase
+     * @param phase Phase
+     */
     public void setPhase(Phase phase) {
         if (phase != this.phase) {
             this.phase = phase;
@@ -139,10 +192,18 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * Get the step
+     * @return int
+     */
     public int getStep() {
         return step;
     }
 
+    /**
+     * Set step
+     * @param step int
+     */
     public void setStep(int step) {
         if (step != this.step) {
             this.step = step;
@@ -150,10 +211,18 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * Check if it is step mode
+     * @return boolean.
+     */
     public boolean isStepMode() {
         return stepMode;
     }
 
+    /**
+     * Set step mode
+     * @param stepMode boolean
+     */
     public void setStepMode(boolean stepMode) {
         if (stepMode != this.stepMode) {
             this.stepMode = stepMode;
@@ -161,6 +230,11 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * Get player number
+     * @param player Player
+     * @return int
+     */
     public int getPlayerNumber(@NotNull Player player) {
         if (player.board == this) {
             return players.indexOf(player);
@@ -200,6 +274,10 @@ public class Board extends Subject {
         return getSpace(x, y);
     }
 
+    /**
+     * Get status message
+     * @return String
+     */
     public String getStatusMessage() {
         // this is actually a view aspect, but for making assignment V1 easy for
         // the students, this method gives a string representation of the current
@@ -210,10 +288,18 @@ public class Board extends Subject {
         return "Player = " + getCurrentPlayer().getName() + ", number of moves: " + getCounter();
     }
 
+    /**
+     * Get counter
+     * @return int
+     */
     public int getCounter() {
         return counter;
     }
 
+    /**
+     * Set counter
+     * @param counter int
+     */
     public void setCounter(int counter) {
         if(this.counter != counter){
         this.counter = counter;

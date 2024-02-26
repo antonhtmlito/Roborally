@@ -26,7 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * ...
+ * Command class of the Roborally game
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -48,15 +48,28 @@ public enum Command {
 
     final private List<Command> options;
 
+    /**
+     * Constructor of Command class
+     * @param displayName String
+     * @param options Command
+     */
     Command(String displayName, Command... options) {
         this.displayName = displayName;
         this.options = Collections.unmodifiableList(Arrays.asList(options));
     }
 
+    /**
+     * Check if interactive
+     * @return boolean
+     */
     public boolean isInteractive() {
         return !options.isEmpty();
     }
 
+    /**
+     * Get options
+     * @return List of Command
+     */
     public List<Command> getOptions() {
         return options;
     }

@@ -32,7 +32,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * ...
+ * RoboRally class
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -47,11 +47,19 @@ public class RoboRally extends Application {
 
     // private AppController appController;
 
+    /**
+     * Init
+     * @throws Exception
+     */
     @Override
     public void init() throws Exception {
         super.init();
     }
 
+    /**
+     * Start
+     * @param primaryStage Stage
+     */
     @Override
     public void start(Stage primaryStage) {
         stage = primaryStage;
@@ -78,6 +86,10 @@ public class RoboRally extends Application {
         stage.show();
     }
 
+    /**
+     * Create Board view
+     * @param gameController GameController
+     */
     public void createBoardView(GameController gameController) {
         // if present, remove old BoardView
         boardRoot.getChildren().clear();
@@ -91,6 +103,10 @@ public class RoboRally extends Application {
         stage.sizeToScene();
     }
 
+    /**
+     * Stop
+     * @throws Exception
+     */
     @Override
     public void stop() throws Exception {
         super.stop();
@@ -101,6 +117,10 @@ public class RoboRally extends Application {
         //     so that the AppController can take care of that.
     }
 
+    /**
+     * Main method of RoboRally
+     * @param args String[]
+     */
     public static void main(String[] args) {
         launch(args);
     }
