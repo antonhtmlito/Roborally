@@ -184,7 +184,12 @@ public class GameController {
 
     }
     /**
-     * Execute next step
+     *
+     * This method checks whether there is a card and what card it is
+     * and then executes the step based on the card
+     *
+     * @author Jonas Woetmann Larsen,
+     *
      */
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
