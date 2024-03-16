@@ -181,4 +181,8 @@ public class Player extends Subject {
         return cards[i];
     }
 
+    public void rotate(Heading direction) {
+        this.heading = direction;
+    }
+
 }

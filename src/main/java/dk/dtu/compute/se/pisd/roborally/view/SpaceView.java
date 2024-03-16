@@ -46,6 +46,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     public final Space space;
 
+    private Polygon gearSymbol;
 
     public SpaceView(@NotNull Space space) {
         this.space = space;
@@ -70,6 +71,17 @@ public class SpaceView extends StackPane implements ViewObserver {
         // This space view should listen to changes of the space
         space.attach(this);
         update(space);
+
+        gearSymbol = new Polygon(
+                0.0, 0.0,
+                5.0, 5.0,
+                6.0, 10.0,
+                -6.0, 10.0,
+                -5.0, 5.0
+        );
+        gearSymbol.setFill(Color.RED);
+        gearSymbol.setVisible(space.hasGear());
+        this.getChildren().add(gearSymbol);
     }
 
     private void updatePlayer() {

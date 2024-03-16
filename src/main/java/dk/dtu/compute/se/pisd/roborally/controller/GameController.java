@@ -188,7 +188,7 @@ public class GameController {
      * This method checks whether there is a card and what card it is
      * and then executes the step based on the card
      *
-     * @author Jonas Woetmann Larsen,
+     * @author Jonas Woetmann Larsen, S235446
      *
      */
     private void executeNextStep() {
@@ -268,7 +268,26 @@ public class GameController {
         System.out.println("++++++++  moveForward");
         Space current = player.getSpace();
         Space target = board.getNeighbour(current, player.getHeading());
-        player.setSpace(target);
+
+        if(target.hasGear()) {
+            player.setSpace(target);
+            switch (player.getHeading()) {
+                case NORTH:
+                    player.setHeading(Heading.EAST);
+                    break;
+                case EAST:
+                    player.setHeading(Heading.SOUTH);
+                    break;
+                case SOUTH:
+                    player.setHeading(Heading.WEST);
+                    break;
+                case WEST:
+                    player.setHeading(Heading.NORTH);
+                    break;
+            }
+        } else {
+            player.setSpace(target);
+        }
     }
 
     /**
@@ -342,6 +361,25 @@ public class GameController {
     public void notImplemented() {
         // XXX just for now to indicate that the actual method is not yet implemented
         assert false;
+    }
+
+    public void setGearSpaces() {
+        int[][] gearSpaceCoordinates = {
+                {5,2},
+                {2,4},
+        };
+
+        Board board = this.board;
+
+        for (int[] coordinates : gearSpaceCoordinates) {
+            int x = coordinates[0];
+            int y = coordinates[1];
+            Space space = board.getSpace(x, y);
+            if (space != null) {
+                space.setHasGear(true);
+            }
+
+        }
     }
 
 }

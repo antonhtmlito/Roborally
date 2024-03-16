@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import javafx.util.Pair;
 
 /**
  * Space class of the Roborally game
@@ -35,7 +36,7 @@ public class Space extends Subject {
 
     public final int x;
     public final int y;
-
+    private boolean hasGear;
     private Player player;
 
     /**
@@ -87,6 +88,13 @@ public class Space extends Subject {
         // also need to update when some player attributes change, the player can
         // notify the space of these changes by calling this method.
         notifyChange();
+    }
+
+    public void setHasGear(boolean hasGear) {
+        this.hasGear = hasGear;
+    }
+    public boolean hasGear() {
+        return hasGear;
     }
 
 }
