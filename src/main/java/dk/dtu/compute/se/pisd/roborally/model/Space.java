@@ -36,7 +36,28 @@ public class Space extends Subject {
     public final int x;
     public final int y;
 
+    /**
+     * @author Anton Fu Hou Dong, s235460
+     * @param hasWall boolean
+     */
+    public void setHasWall(boolean hasWall) {
+        this.hasWall = hasWall;
+    }
+
+    /**
+     * @author Anton Fu Hou Dong, s235460
+     * @return boolean
+     */
+    public boolean isHasWall() {
+        if(x==3 && y==4)
+            return true;
+        return hasWall;
+    }
+
+    private boolean hasWall;
+
     private Player player;
+
 
     /**
      * Constructor of Space
