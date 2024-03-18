@@ -64,6 +64,7 @@ public class Space extends Subject {
      * @return boolean
      */
     public boolean isHasWall() {
+        // just hack to hard code a wall here, need to modify later
         if(x==3 && y==4)
             return true;
         return hasWall;
