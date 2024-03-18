@@ -269,7 +269,7 @@ public class GameController {
         Space current = player.getSpace();
         Space target = board.getNeighbour(current, player.getHeading());
 
-        if(target.hasGear()) {
+        if (target.hasGear()) {
             player.setSpace(target);
             switch (player.getHeading()) {
                 case NORTH:
@@ -299,7 +299,26 @@ public class GameController {
         Space current = player.getSpace();
         Space target = board.getNeighbour(current, player.getHeading());
         target = board.getNeighbour(target, player.getHeading());
-        player.setSpace(target);
+
+        if (target.hasGear()) {
+            player.setSpace(target);
+            switch (player.getHeading()) {
+                case NORTH:
+                    player.setHeading(Heading.EAST);
+                    break;
+                case EAST:
+                    player.setHeading(Heading.SOUTH);
+                    break;
+                case SOUTH:
+                    player.setHeading(Heading.WEST);
+                    break;
+                case WEST:
+                    player.setHeading(Heading.NORTH);
+                    break;
+            }
+        } else {
+            player.setSpace(target);
+        }
     }
 
     /**

@@ -22,15 +22,12 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
+import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -46,7 +43,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     public final Space space;
 
-    private Polygon gearSymbol;
+    public Polygon gearSymbol;
 
     public SpaceView(@NotNull Space space) {
         this.space = space;
@@ -72,20 +69,19 @@ public class SpaceView extends StackPane implements ViewObserver {
         space.attach(this);
         update(space);
 
-        gearSymbol = new Polygon(
-                0.0, 0.0,
-                5.0, 5.0,
-                6.0, 10.0,
-                -6.0, 10.0,
-                -5.0, 5.0
-        );
-        gearSymbol.setFill(Color.RED);
-        gearSymbol.setVisible(space.hasGear());
-        this.getChildren().add(gearSymbol);
+        if (space.hasGear()) {
+            addGearSymbol();
+        }
     }
 
     private void updatePlayer() {
+        boolean gearSymbolExists = gearSymbol != null && this.getChildren().contains(gearSymbol);
+
         this.getChildren().clear();
+
+        if (gearSymbolExists) {
+            this.getChildren().add(gearSymbol);
+        }
 
         Player player = space.getPlayer();
         if (player != null) {
@@ -109,5 +105,29 @@ public class SpaceView extends StackPane implements ViewObserver {
             updatePlayer();
         }
     }
+
+    public void updateGearVisibility() {
+        if (gearSymbol == null && space.hasGear()) {
+            addGearSymbol();
+        } else if (gearSymbol != null) {
+            gearSymbol.setVisible(space.hasGear());
+        }
+    }
+
+    public void addGearSymbol() {
+        if (gearSymbol == null) {
+            gearSymbol = new Polygon(
+                    0.0, 0.0,
+                    5.0, 5.0,
+                    6.0, 10.0,
+                    -6.0, 10.0,
+                    -5.0, 5.0
+            );
+            gearSymbol.setFill(Color.RED);
+            this.getChildren().add(gearSymbol);
+        }
+    }
+
+
 
 }
