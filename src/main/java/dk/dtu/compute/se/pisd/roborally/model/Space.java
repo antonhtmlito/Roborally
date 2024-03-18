@@ -71,6 +71,13 @@ public class Space extends Subject {
         // just hack to hard code a wall here, need to modify later
         if(x==3 && y==4)
             return true;
+        else if(x==4 && y==3)
+            return true;
+        else if(x==2 && y==5)
+            return true;
+        else if(x==1 && y==6)
+            return true;
+
         return hasWall;
     }
 
