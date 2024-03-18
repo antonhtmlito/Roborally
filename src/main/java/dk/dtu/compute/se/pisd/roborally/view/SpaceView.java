@@ -90,9 +90,9 @@ public class SpaceView extends StackPane implements ViewObserver {
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
         } else if(space.isHasWall()) {
+            // show a wall here, need optimize later
             this.setStyle("-fx-background-color: brown;");
         }
-
     }
 
     @Override
