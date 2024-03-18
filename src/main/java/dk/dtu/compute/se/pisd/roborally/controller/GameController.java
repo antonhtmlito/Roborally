@@ -277,8 +277,8 @@ public class GameController {
         Space T6Target  = board.getNeighbour(T5Target, player.getHeading());
 
         if(target.isHasWall()) {
-            System.out.println("there is wall on the space, cannot push the player!");
-            //return;
+            System.out.println("there is wall on the space, cannot move the player!");
+            return;
         }
         if(target.getPlayer() != null) {
             System.out.println("there is player " + target.getPlayer().getName() + " on the space, push the player!");
