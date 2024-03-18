@@ -74,6 +74,16 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
+    /**
+     *
+     * This method updates the player on the board so as when a move
+     * is made the arrow indicating the players robot will turn or move
+     * and the prior arrow will disappear. It also updates the gear so
+     * it doesn't disappear when a player lands on it
+     *
+     * @author Jonas Woetmann Larsen, S235446
+     *
+     */
     private void updatePlayer() {
         boolean gearSymbolExists = gearSymbol != null && this.getChildren().contains(gearSymbol);
 
@@ -106,14 +116,14 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
-    public void updateGearVisibility() {
-        if (gearSymbol == null && space.hasGear()) {
-            addGearSymbol();
-        } else if (gearSymbol != null) {
-            gearSymbol.setVisible(space.hasGear());
-        }
-    }
-
+    /**
+     *
+     * This method adds the gear symbol when called upon.
+     * Its shape is also defined here.
+     *
+     * @author Jonas Woetmann Larsen, S235446
+     *
+     */
     public void addGearSymbol() {
         if (gearSymbol == null) {
             gearSymbol = new Polygon(
