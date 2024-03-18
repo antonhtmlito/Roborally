@@ -30,6 +30,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -61,6 +62,12 @@ public class PlayerView extends Tab implements ViewObserver {
     private VBox playerInteractionPanel;
 
     private GameController gameController;
+
+    private Label checkpointLabel;
+
+    public PlayerView(){
+        checkpointLabel = new Label("Checkpoints Colleted: 0");
+    }
 
     public PlayerView(@NotNull GameController gameController, @NotNull Player player) {
         super(player.getName());
@@ -199,21 +206,11 @@ public class PlayerView extends Tab implements ViewObserver {
                 playerInteractionPanel.getChildren().clear();
 
                 if (player.board.getCurrentPlayer() == player) {
-                    // TODO Assignment V3: these buttons should be shown only when there is
-                    //      an interactive command card, and the buttons should represent
-                    //      the player's choices of the interactive command card. The
-                    //      following is just a mockup showing two options
-                    /*
-                    Button optionButton = new Button("Option1");
-                    optionButton.setOnAction( e -> gameController.notImplemented());
-                    optionButton.setDisable(false);
-                    playerInteractionPanel.getChildren().add(optionButton);
-
-                    optionButton = new Button("Option 2");
-                    optionButton.setOnAction( e -> gameController.notImplemented());
-                    optionButton.setDisable(false);
-                    playerInteractionPanel.getChildren().add(optionButton);
-
+                    /**
+                     * This code shows the interaction in a command card
+                     * and it represent the player's choices of the interactive comman card.
+                     *
+                     * @author Martin Dahl Lund, s235454
                      */
                     CommandCardField field = player.getProgramField(player.board.getStep());
                     if (field !=null){
@@ -232,5 +229,7 @@ public class PlayerView extends Tab implements ViewObserver {
             }
         }
     }
-
+    public void updateCheckpointCounter(int checkpoints){
+        checkpointLabel.setText("Checkpoints Colleted: " + checkpoints);
+    }
 }
