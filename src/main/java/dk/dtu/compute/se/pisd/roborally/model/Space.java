@@ -36,8 +36,48 @@ public class Space extends Subject {
 
     public final int x;
     public final int y;
+
     private boolean hasGear;
+
+
+    /**
+     * Here it checks if the player has landed on a checkpoint
+     *
+     * @author Martin Dahl Lund, s235454
+     */
+
+    private boolean isCheckpoint;
+    public boolean isCheckpoint(){
+        return isCheckpoint;
+    }
+    public void setCheckpoint(boolean isCheckpoint){
+        this.isCheckpoint = isCheckpoint;
+    }
+
+
+    /**
+     * @author Anton Fu Hou Dong, s235460
+     * @param hasWall boolean
+     */
+    public void setHasWall(boolean hasWall) {
+        this.hasWall = hasWall;
+    }
+
+    /**
+     * @author Anton Fu Hou Dong, s235460
+     * @return boolean
+     */
+    public boolean isHasWall() {
+        // just hack to hard code a wall here, need to modify later
+        if(x==3 && y==4)
+            return true;
+        return hasWall;
+    }
+
+    private boolean hasWall;
+
     private Player player;
+
 
     /**
      * Constructor of Space

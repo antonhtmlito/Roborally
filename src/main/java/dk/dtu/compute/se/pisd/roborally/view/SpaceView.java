@@ -25,6 +25,11 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Background;
+
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -106,13 +111,37 @@ public class SpaceView extends StackPane implements ViewObserver {
 
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
+        } else if(space.isHasWall()) {
+            // show a wall here, need optimize later
+            this.setStyle("-fx-background-color: brown;");
         }
     }
 
     @Override
     public void updateView(Subject subject) {
+
         if (subject == this.space) {
             updatePlayer();
+            updateCheckpoint();
+        }
+    }
+
+
+    /**
+     * This code is how the checkpoint token should look like
+     * we chose the color Gold in right now
+     *
+     * @author Martin Dahl Lund, s235454
+     */
+    private void updateCheckpoint(){
+        if (space.isCheckpoint()){
+            Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+            GraphicsContext gc = canvas.getGraphicsContext2D();
+
+            gc.setFill(Color.GOLD);
+            gc.fillOval(SPACE_WIDTH * 0.2, SPACE_HEIGHT * 0.2, SPACE_WIDTH * 0.6, SPACE_HEIGHT * 0.6);
+
+            this.getChildren().add(canvas);
         }
     }
 
