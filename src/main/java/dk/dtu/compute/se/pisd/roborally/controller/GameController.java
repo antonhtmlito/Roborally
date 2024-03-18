@@ -151,9 +151,10 @@ public class GameController {
             executeNextStep();
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
     }
-    // XXX: V3
+
 
     /**
+     * @S235451
      * This method executes the command option and continues.
      * @param option Command
      */
