@@ -98,6 +98,26 @@ public class SpaceView extends StackPane implements ViewObserver {
     public void updateView(Subject subject) {
         if (subject == this.space) {
             updatePlayer();
+            updateCheckpoint();
+        }
+    }
+
+
+    /**
+     * This code is how the checkpoint token should look like
+     * we chose the color Gold in right now
+     *
+     * @author Martin Dahl Lund, s235454
+     */
+    private void updateCheckpoint(){
+        if (space.isCheckpoint()){
+            Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+            GraphicsContext gc = canvas.getGraphicsContext2D();
+
+            gc.setFill(Color.GOLD);
+            gc.fillOval(SPACE_WIDTH * 0.2, SPACE_HEIGHT * 0.2, SPACE_WIDTH * 0.6, SPACE_HEIGHT * 0.6);
+
+            this.getChildren().add(canvas);
         }
         //@S235451
         if (space.x == 2 && space.y == 2) {
