@@ -185,7 +185,12 @@ public class GameController {
 
     }
     /**
-     * Execute next step
+     *
+     * This method checks whether there is a card and what card it is
+     * and then executes the step based on the card
+     *
+     * @author Jonas Woetmann Larsen,
+     *
      */
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
@@ -259,12 +264,83 @@ public class GameController {
      * This makes player move forward
      *
      * @param player Player
+     * @author Anton Fu Hou Dong, s235460
      */
     public void moveForward(@NotNull Player player) {
         System.out.println("++++++++  moveForward");
         Space current = player.getSpace();
         Space target = board.getNeighbour(current, player.getHeading());
-        player.setSpace(target);
+        Space nextTarget = board.getNeighbour(target, player.getHeading());
+        Space T3Target  = board.getNeighbour(nextTarget, player.getHeading());
+        Space T4Target  = board.getNeighbour(T3Target, player.getHeading());
+        Space T5Target  = board.getNeighbour(T4Target, player.getHeading());
+        Space T6Target  = board.getNeighbour(T5Target, player.getHeading());
+
+        if(target.isHasWall()) {
+            System.out.println("there is wall on the space, cannot push the player!");
+            //return;
+        }
+        if(target.getPlayer() != null) {
+            System.out.println("there is player " + target.getPlayer().getName() + " on the space, push the player!");
+            if(nextTarget.getPlayer() == null) {
+                if(nextTarget.isHasWall()) {
+                    System.out.println("there is wall on the space, cannot push the player!");
+                    return;
+                }
+
+                // move both players
+                nextTarget.setPlayer(target.getPlayer());
+                player.setSpace(target);
+            } else {
+                System.out.println("there is player " + nextTarget.getPlayer().getName() + " on the next space!");
+                if(T3Target.getPlayer() == null) {
+                    if(T3Target.isHasWall()) {
+                        System.out.println("there is wall on the space, cannot push the player!");
+                        return;
+                    }
+                    T3Target.setPlayer(nextTarget.getPlayer());
+                    nextTarget.setPlayer(target.getPlayer());
+                    player.setSpace(target);
+                } else {
+                    if(T4Target.getPlayer() == null) {
+                        if(T4Target.isHasWall()) {
+                            System.out.println("there is wall on the space, cannot push the player!");
+                            return;
+                        }
+                        T4Target.setPlayer(T3Target.getPlayer());
+                        T3Target.setPlayer(nextTarget.getPlayer());
+                        nextTarget.setPlayer(target.getPlayer());
+                        player.setSpace(target);
+                    } else {
+                        if(T5Target.getPlayer() == null) {
+                            if(T5Target.isHasWall()) {
+                                System.out.println("there is wall on the space, cannot push the player!");
+                                return;
+                            }
+                            T5Target.setPlayer(T4Target.getPlayer());
+                            T4Target.setPlayer(T3Target.getPlayer());
+                            T3Target.setPlayer(nextTarget.getPlayer());
+                            nextTarget.setPlayer(target.getPlayer());
+                            player.setSpace(target);
+                        } else {
+                            if(T6Target.isHasWall()) {
+                                System.out.println("there is wall on the space, cannot push the player!");
+                                return;
+                            }
+                            T6Target.setPlayer(T5Target.getPlayer());
+                            T5Target.setPlayer(T4Target.getPlayer());
+                            T4Target.setPlayer(T3Target.getPlayer());
+                            T3Target.setPlayer(nextTarget.getPlayer());
+                            nextTarget.setPlayer(target.getPlayer());
+                            player.setSpace(target);
+                        }
+                    }
+
+                }
+            }
+        } else {
+            player.setSpace(target);
+        }
     }
 
     /**
@@ -273,10 +349,8 @@ public class GameController {
      */
     public void fastForward(@NotNull Player player) {
         System.out.println("++++++++  fastForward");
-        Space current = player.getSpace();
-        Space target = board.getNeighbour(current, player.getHeading());
-        target = board.getNeighbour(target, player.getHeading());
-        player.setSpace(target);
+        moveForward(player);
+        moveForward(player);
     }
 
     /**
