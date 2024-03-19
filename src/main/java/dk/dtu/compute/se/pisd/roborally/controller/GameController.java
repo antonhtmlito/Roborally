@@ -289,6 +289,7 @@ public class GameController {
                     player.setHeading(Heading.NORTH);
                     break;
             }
+            return;
         }
 
         Space nextTarget = board.getNeighbour(target, player.getHeading());
