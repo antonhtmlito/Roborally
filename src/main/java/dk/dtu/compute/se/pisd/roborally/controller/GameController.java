@@ -189,7 +189,7 @@ public class GameController {
      * This method checks whether there is a card and what card it is
      * and then executes the step based on the card
      *
-     * @author Jonas Woetmann Larsen,
+     * @author Jonas Woetmann Larsen, S235446
      *
      */
     private void executeNextStep() {
@@ -261,15 +261,36 @@ public class GameController {
     }
 
     /**
-     * This makes player move forward
      *
+     * This method makes the player move forward when a "FWD" card has been played.
+     * it also checks to see if the target has a gear and rotates the player accordingly.
+     * @author Anton Fu Hou Dong, s235460, Jonas Woetmann Larsen, S235446
      * @param player Player
-     * @author Anton Fu Hou Dong, s235460
+     *
      */
     public void moveForward(@NotNull Player player) {
         System.out.println("++++++++  moveForward");
         Space current = player.getSpace();
         Space target = board.getNeighbour(current, player.getHeading());
+
+        if (target.hasGear()) {
+            player.setSpace(target);
+            switch (player.getHeading()) {
+                case NORTH:
+                    player.setHeading(Heading.EAST);
+                    break;
+                case EAST:
+                    player.setHeading(Heading.SOUTH);
+                    break;
+                case SOUTH:
+                    player.setHeading(Heading.WEST);
+                    break;
+                case WEST:
+                    player.setHeading(Heading.NORTH);
+                    break;
+            }
+        }
+
         Space nextTarget = board.getNeighbour(target, player.getHeading());
         Space T3Target  = board.getNeighbour(nextTarget, player.getHeading());
         Space T4Target  = board.getNeighbour(T3Target, player.getHeading());
@@ -344,8 +365,13 @@ public class GameController {
     }
 
     /**
-     * This makes player move forward twice
-     * @param player Player
+     *
+     * This method is similar to the Forward method but moves the player
+     * two spaces forward when playing a "Fast FWD" card. And again it
+     * checks whether the target is a gear or not
+     *
+     * @author Jonas Woetmann Larsen, S235446
+     *
      */
     public void fastForward(@NotNull Player player) {
         System.out.println("++++++++  fastForward");
@@ -406,12 +432,31 @@ public class GameController {
     }
 
     /**
-     * A method called when no corresponding controller operation is implemented yet. This
-     * should eventually be removed.
+     *
+     * This method creates coordinates for the spaces to have gears
+     * on them and specifies which spaces should have gears as a set
+     * of coordinates
+     *
+     * @author Jonas Woetmann Larsen, S235446
+     *
      */
-    public void notImplemented() {
-        // XXX just for now to indicate that the actual method is not yet implemented
-        assert false;
+    public void setGearSpaces() {
+        int[][] gearSpaceCoordinates = {
+                {5,2},
+                {2,4},
+        };
+
+        Board board = this.board;
+
+        for (int[] coordinates : gearSpaceCoordinates) {
+            int x = coordinates[0];
+            int y = coordinates[1];
+            Space space = board.getSpace(x, y);
+            if (space != null) {
+                space.setHasGear(true);
+            }
+
+        }
     }
 
 }

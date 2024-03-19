@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import javafx.util.Pair;
 
 /**
  * Space class of the Roborally game
@@ -35,6 +36,9 @@ public class Space extends Subject {
 
     public final int x;
     public final int y;
+
+    private boolean hasGear;
+
 
     /**
      * Here it checks if the player has landed on a checkpoint
@@ -67,6 +71,13 @@ public class Space extends Subject {
         // just hack to hard code a wall here, need to modify later
         if(x==3 && y==4)
             return true;
+        else if(x==4 && y==3)
+            return true;
+        else if(x==2 && y==5)
+            return true;
+        else if(x==1 && y==6)
+            return true;
+
         return hasWall;
     }
 
@@ -124,6 +135,13 @@ public class Space extends Subject {
         // also need to update when some player attributes change, the player can
         // notify the space of these changes by calling this method.
         notifyChange();
+    }
+
+    public void setHasGear(boolean hasGear) {
+        this.hasGear = hasGear;
+    }
+    public boolean hasGear() {
+        return hasGear;
     }
 
 }

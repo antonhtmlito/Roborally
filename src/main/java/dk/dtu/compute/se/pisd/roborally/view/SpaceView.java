@@ -22,16 +22,17 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
+import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Background;
+
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -47,6 +48,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     public final Space space;
 
+    public Polygon gearSymbol;
 
     public SpaceView(@NotNull Space space) {
         this.space = space;
@@ -71,10 +73,30 @@ public class SpaceView extends StackPane implements ViewObserver {
         // This space view should listen to changes of the space
         space.attach(this);
         update(space);
+
+        if (space.hasGear()) {
+            addGearSymbol();
+        }
     }
 
+    /**
+     *
+     * This method updates the player on the board so as when a move
+     * is made the arrow indicating the players robot will turn or move
+     * and the prior arrow will disappear. It also updates the gear so
+     * it doesn't disappear when a player lands on it
+     *
+     * @author Jonas Woetmann Larsen, S235446
+     *
+     */
     private void updatePlayer() {
+        boolean gearSymbolExists = gearSymbol != null && this.getChildren().contains(gearSymbol);
+
         this.getChildren().clear();
+
+        if (gearSymbolExists) {
+            this.getChildren().add(gearSymbol);
+        }
 
         Player player = space.getPlayer();
         if (player != null) {
@@ -122,5 +144,29 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(canvas);
         }
     }
+
+    /**
+     *
+     * This method adds the gear symbol when called upon.
+     * Its shape is also defined here.
+     *
+     * @author Jonas Woetmann Larsen, S235446
+     *
+     */
+    public void addGearSymbol() {
+        if (gearSymbol == null) {
+            gearSymbol = new Polygon(
+                    0.0, 0.0,
+                    5.0, 5.0,
+                    6.0, 10.0,
+                    -6.0, 10.0,
+                    -5.0, 5.0
+            );
+            gearSymbol.setFill(Color.RED);
+            this.getChildren().add(gearSymbol);
+        }
+    }
+
+
 
 }
