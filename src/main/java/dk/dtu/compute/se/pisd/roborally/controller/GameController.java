@@ -154,8 +154,9 @@ public class GameController {
 
 
     /**
-     * @S235451
+     *
      * This method executes the command option and continues.
+     * @author William Wegener Kofoed, S235451
      * @param option Command
      */
     public void executeCommandOptionAndContinue(@NotNull Command option) {
