@@ -50,11 +50,13 @@ public class Player extends Subject {
     private CommandCardField[] cards;
 
     private PlayerView playerView;
+
     /**
      * Constructor of Player class
+     *
      * @param board Board
      * @param color String
-     * @param name String
+     * @param name  String
      */
     public Player(@NotNull Board board, String color, @NotNull String name) {
         this.board = board;
@@ -76,6 +78,7 @@ public class Player extends Subject {
 
     /**
      * Get name
+     *
      * @return String
      */
     public String getName() {
@@ -84,6 +87,7 @@ public class Player extends Subject {
 
     /**
      * Set the name
+     *
      * @param name String
      */
     public void setName(String name) {
@@ -98,6 +102,7 @@ public class Player extends Subject {
 
     /**
      * Get color
+     *
      * @return String
      */
     public String getColor() {
@@ -106,6 +111,7 @@ public class Player extends Subject {
 
     /**
      * Set color
+     *
      * @param color String
      */
     public void setColor(String color) {
@@ -118,6 +124,7 @@ public class Player extends Subject {
 
     /**
      * Get space
+     *
      * @return Space
      */
     public Space getSpace() {
@@ -126,6 +133,7 @@ public class Player extends Subject {
 
     /**
      * Set space
+     *
      * @param space Space
      */
     public void setSpace(Space space) {
@@ -145,6 +153,7 @@ public class Player extends Subject {
 
     /**
      * Get Heading
+     *
      * @return Heading
      */
     public Heading getHeading() {
@@ -153,6 +162,7 @@ public class Player extends Subject {
 
     /**
      * Set Heading
+     *
      * @param heading Heading
      */
     public void setHeading(@NotNull Heading heading) {
@@ -167,6 +177,7 @@ public class Player extends Subject {
 
     /**
      * Get program field
+     *
      * @param i int
      * @return CommandCardField
      */
@@ -176,6 +187,7 @@ public class Player extends Subject {
 
     /**
      * Get card field
+     *
      * @param i int
      * @return CommandCardField
      */
@@ -185,3 +197,5 @@ public class Player extends Subject {
 
 
 }
+
+

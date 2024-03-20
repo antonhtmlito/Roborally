@@ -33,6 +33,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -98,7 +99,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(gearSymbol);
         }
 
-        Player player = space.getPlayer();
+       /* Player player = space.getPlayer();
         if (player != null) {
             Polygon arrow = new Polygon(0.0, 0.0,
                     10.0, 20.0,
@@ -111,18 +112,36 @@ public class SpaceView extends StackPane implements ViewObserver {
 
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
-        } else if(space.isHasWall()) {
+        //} else if(space.isHasWall()) {
             // show a wall here, need optimize later
             this.setStyle("-fx-background-color: brown;");
-        }
+        }*/
     }
-
+    /**
+     *
+     * This method create a wall on the board
+     * @author William Wegener Kofoed, S235451
+     *
+     */
     @Override
     public void updateView(Subject subject) {
 
         if (subject == this.space) {
             updatePlayer();
             updateCheckpoint();
+        }
+        // wall
+        if (space.x == 2 && space.y == 2) {
+            Canvas canvas =
+                    new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+            GraphicsContext gc =
+                    canvas.getGraphicsContext2D();
+            gc.setStroke(Color.RED);
+            gc.setLineWidth(5);
+            gc.setLineCap(StrokeLineCap.ROUND);
+            gc.strokeLine(2, SPACE_HEIGHT-2,
+                    SPACE_WIDTH-2, SPACE_HEIGHT-2);
+            this.getChildren().add(canvas);
         }
     }
 
