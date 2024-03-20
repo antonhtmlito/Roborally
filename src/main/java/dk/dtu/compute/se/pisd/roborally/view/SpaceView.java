@@ -99,7 +99,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(gearSymbol);
         }
 
-       /* Player player = space.getPlayer();
+        Player player = space.getPlayer();
         if (player != null) {
             Polygon arrow = new Polygon(0.0, 0.0,
                     10.0, 20.0,
@@ -112,10 +112,10 @@ public class SpaceView extends StackPane implements ViewObserver {
 
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
-        //} else if(space.isHasWall()) {
+        /*} else if(space.isHasWall()) {
             // show a wall here, need optimize later
             this.setStyle("-fx-background-color: brown;");
-        }*/
+        */}
     }
     /**
      *
