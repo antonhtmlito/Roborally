@@ -13,8 +13,8 @@ module roborally {
 
     exports dk.dtu.compute.se.pisd.roborally;
 
-    opens schemas;
-    opens boards;
+   // opens schemas;
+   // opens boards;
 
     // The following are needed for Gson being able to create the
     // respective Java objects when reading JSON files
