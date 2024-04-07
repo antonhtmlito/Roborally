@@ -21,8 +21,15 @@
  */
 package dk.dtu.compute.se.pisd.roborally.model;
 
+import com.google.gson.JsonArray;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import javafx.util.Pair;
+
+import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Space class of the Roborally game
@@ -54,6 +61,8 @@ public class Space extends Subject {
         this.isCheckpoint = isCheckpoint;
     }
 
+    private List<Heading> walls = new ArrayList<>();
+    private List<FieldAction> actions = new ArrayList<>();
 
     /**
      * @author Anton Fu Hou Dong, s235460
@@ -142,6 +151,15 @@ public class Space extends Subject {
     }
     public boolean hasGear() {
         return hasGear;
+    }
+
+
+    public List<Heading> getWalls() {
+        return walls;
+    }
+
+    public List<FieldAction> getActions() {
+        return actions;
     }
 
 }

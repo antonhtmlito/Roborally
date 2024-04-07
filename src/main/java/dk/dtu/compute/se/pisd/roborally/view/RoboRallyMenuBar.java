@@ -34,24 +34,19 @@ import javafx.scene.control.MenuItem;
  */
 public class RoboRallyMenuBar extends MenuBar {
 
-    private AppController appController;
+    private final AppController appController;
 
-    private Menu controlMenu;
+    private final MenuItem newGame;
+    private final MenuItem saveGame;
 
-    private MenuItem saveGame;
+    private final MenuItem loadGame;
 
-    private MenuItem newGame;
-
-    private MenuItem loadGame;
-
-    private MenuItem stopGame;
-
-    private MenuItem exitApp;
+    private final MenuItem stopGame;
 
     public RoboRallyMenuBar(AppController appController) {
         this.appController = appController;
 
-        controlMenu = new Menu("File");
+        Menu controlMenu = new Menu("File");
         this.getMenus().add(controlMenu);
 
         newGame = new MenuItem("New Game");
@@ -70,8 +65,8 @@ public class RoboRallyMenuBar extends MenuBar {
         loadGame.setOnAction( e -> this.appController.loadGame());
         controlMenu.getItems().add(loadGame);
 
-        exitApp = new MenuItem("Exit");
-        exitApp.setOnAction( e -> this.appController.exit());
+        MenuItem exitApp = new MenuItem("Exit");
+        exitApp.setOnAction(e -> this.appController.exit());
         controlMenu.getItems().add(exitApp);
 
         controlMenu.setOnShowing(e -> update());
@@ -81,14 +76,14 @@ public class RoboRallyMenuBar extends MenuBar {
 
     public void update() {
         if (appController.isGameRunning()) {
-            newGame.setVisible(false);
+            newGame.setVisible(true);
             stopGame.setVisible(true);
             saveGame.setVisible(true);
-            loadGame.setVisible(false);
+            loadGame.setVisible(true);
         } else {
             newGame.setVisible(true);
-            stopGame.setVisible(false);
-            saveGame.setVisible(false);
+            stopGame.setVisible(true);
+            saveGame.setVisible(true);
             loadGame.setVisible(true);
         }
     }
