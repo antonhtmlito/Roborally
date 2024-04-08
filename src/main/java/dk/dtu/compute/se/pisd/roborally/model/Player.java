@@ -25,6 +25,8 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.view.PlayerView;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Stack;
+
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
 
 /**
@@ -49,6 +51,12 @@ public class Player extends Subject {
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
+
+    Stack<CommandCard> deck;
+
+    private int cardsEach;
+
+    private Stack<CommandCard> discardpile;
 
     private PlayerView playerView;
 
@@ -83,6 +91,10 @@ public class Player extends Subject {
         for (int i = 0; i < cards.length; i++) {
             cards[i] = new CommandCardField(this);
         }
+
+        deck = new Stack<>();
+        discardpile = new Stack<>();
+        cardsEach = 8;
     }
 
     /**
@@ -149,6 +161,9 @@ public class Player extends Subject {
         return space;
     }
 
+    public Stack<CommandCard> getDiscardpile(){
+        return discardpile;
+    }
     /**
      * Set space
      *
@@ -214,6 +229,10 @@ public class Player extends Subject {
     }
 
 
+    public Stack<CommandCard> getCardDeck(){
+
+        return deck;
+    }
 }
 
 
