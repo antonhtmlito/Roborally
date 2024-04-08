@@ -40,8 +40,8 @@ public class Connector {
     private static final String HOST     = "localhost";
     private static final int    PORT     = 3306;
     private static final String DATABASE = "pisu";
-    private static final String USERNAME = "user";
-    private static final String PASSWORD = "";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "root";
 
     private static final String DELIMITER = ";;";
     
@@ -53,8 +53,8 @@ public class Connector {
 			// String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
 			String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?serverTimezone=UTC";
 			connection = DriverManager.getConnection(url, USERNAME, PASSWORD);
-
-			createDatabaseSchema();
+			createDatabaseSchema("schemas/createdatabase.sql");
+			createDatabaseSchema("schemas/createschema.sql");
 		} catch (SQLException e) {
 			// TODO we should try to diagnose and fix some problems here and
 			//      exit in a more graceful way
@@ -64,10 +64,10 @@ public class Connector {
 		System.out.println("End connector");
     }
     
-    private void createDatabaseSchema() {
-		System.out.println("start createDatabaseSchema");
+    private void createDatabaseSchema(String url) {
+		System.out.println("start createDatabaseSchema " + url);
     	String createTablesStatement =
-				IOUtil.readResource("schemas/createschema.sql");
+				IOUtil.readResource(url);
 
     	try {
     		connection.setAutoCommit(false);
