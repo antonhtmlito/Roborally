@@ -43,6 +43,7 @@ public class Player extends Subject {
     private String name;
     private String color;
 
+    private int playerId;
     private Space space;
     private Heading heading = SOUTH;
 
@@ -50,6 +51,14 @@ public class Player extends Subject {
     private CommandCardField[] cards;
 
     private PlayerView playerView;
+
+    public CommandCardField[] getCards() {
+        return cards;
+    }
+
+    public CommandCardField[] getProgram() {
+        return program;
+    }
 
     /**
      * Constructor of Player class
@@ -120,6 +129,15 @@ public class Player extends Subject {
         if (space != null) {
             space.playerChanged();
         }
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+
+    public void setPlayerId(int id) {
+        playerId = id;
     }
 
     /**

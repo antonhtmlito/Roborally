@@ -51,4 +51,7 @@ public class CommandCard extends Subject {
     }
 
 
+    public Command getCommand() {
+        return command;
+    }
 }
