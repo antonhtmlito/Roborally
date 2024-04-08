@@ -21,6 +21,8 @@
  */
 package dk.dtu.compute.se.pisd.roborally;
 
+import dk.dtu.compute.se.pisd.roborally.dal.Connector;
+
 /**
  * This is a class for starting up the RoboRally application. This is a
  * workaround for a strange quirk in the Open JavaFX project launcher,
@@ -37,7 +39,9 @@ public class StartRoboRally {
      * @param args String[]
      */
     public static void main(String[] args) {
+        Connector connector = new Connector();
         RoboRally.main(args);
     }
+
 
 }

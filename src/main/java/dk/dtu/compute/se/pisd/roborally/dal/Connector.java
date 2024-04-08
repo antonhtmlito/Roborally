@@ -35,7 +35,7 @@ import java.sql.Statement;
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
-class Connector {
+public class Connector {
 	
     private static final String HOST     = "localhost";
     private static final int    PORT     = 3306;
@@ -47,7 +47,8 @@ class Connector {
     
     private Connection connection;
         
-    Connector() {
+    public Connector() {
+		System.out.println("Start connector");
         try {
 			// String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
 			String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?serverTimezone=UTC";
@@ -60,10 +61,11 @@ class Connector {
 			e.printStackTrace();
 			// Platform.exit();
 		}
+		System.out.println("End connector");
     }
     
     private void createDatabaseSchema() {
-
+		System.out.println("start createDatabaseSchema");
     	String createTablesStatement =
 				IOUtil.readResource("schemas/createschema.sql");
 
@@ -89,6 +91,7 @@ class Connector {
 				connection.setAutoCommit(true);
 			} catch (SQLException e) {}
 		}
+		System.out.println("end createDatabaseSchema");
     }
     
     Connection getConnection() {
