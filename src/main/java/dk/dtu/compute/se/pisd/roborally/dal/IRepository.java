@@ -23,6 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.dal;
 
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,4 +42,5 @@ public interface IRepository {
 	
 	List<GameInDB> getGames();
 
+	ArrayList<Integer> getGameIds();
 }

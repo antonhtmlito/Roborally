@@ -584,5 +584,25 @@ class Repository implements IRepository {
 		return select_cardstack_stmt;
 	}
 
+	public ArrayList<Integer> getGameIds() {
+		ArrayList<Integer> gameIds = new ArrayList<>();
+		Connection connection = connector.getConnection();
+		int id = 0;
+		try {
+			connection.setAutoCommit(false);
+			PreparedStatement ps = getSelectGameIdsStatement();
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				id = rs.getInt("gameId");
+				gameIds.add(id);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return gameIds;
+	}
+
+
 
 }

@@ -40,6 +40,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -117,8 +118,18 @@ public class AppController implements Observer {
     public void loadGame() {
         // XXX needs to be implememted eventually
         // for now, we just create a new game
-        if (gameController == null) {
-            newGame();
+
+        ArrayList<Integer> gameIds = RepositoryAccess.getRepository().getGameIds();
+
+        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(gameIds.get(0), gameIds);
+        dialog.setTitle("Saved games");
+        dialog.setHeaderText("Select saved game no.");
+        Optional<Integer> result = dialog.showAndWait();
+        if (!result.isEmpty()) {
+            int no = result.get();
+            Board board = RepositoryAccess.getRepository().loadGameFromDB(no);
+            gameController = new GameController(board);
+            roboRally.createBoardView(gameController);
         }
     }
 
