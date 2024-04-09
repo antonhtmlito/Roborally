@@ -53,7 +53,6 @@ public class Connector {
 			// String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
 			String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?serverTimezone=UTC";
 			connection = DriverManager.getConnection(url, USERNAME, PASSWORD);
-			createDatabaseSchema("schemas/createdatabase.sql");
 			createDatabaseSchema("schemas/createschema.sql");
 		} catch (SQLException e) {
 			// TODO we should try to diagnose and fix some problems here and
