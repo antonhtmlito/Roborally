@@ -94,6 +94,7 @@ class Repository implements IRepository {
 	/**
 	 * Constructs a Repository instance which acts as a bridge between the game's data model and the database.
 	 * It uses a given Connector instance to establish a connection to the database for executing SQL queries.
+	 * @param connector The Connector instance used to connect to the database.
 	 * @author @s235460
 	 */
 	Repository(Connector connector){
@@ -103,6 +104,8 @@ class Repository implements IRepository {
 	/**
 	 * Creates a new game in the database with the current state of the Board game.
 	 * It saves the game's basic information along with the state of each player.
+	 * * @param game The game state to be saved into the database.
+	 * * @return true if the game was successfully created in the database, false otherwise.
 	 * @author @s235460
 	 */
 
@@ -184,6 +187,8 @@ class Repository implements IRepository {
 	/**
 	 * Updates the state of the game in the database to reflect the current status of the Board instance.
 	 * This includes updating the current player, game phase, and step.
+	 * @param game The current state of the game to update in the database.
+	 * @return true if the update was successful, false otherwise.
 	 * @author @s235460
 	 */
 
@@ -234,6 +239,8 @@ class Repository implements IRepository {
 	/**
 	 * Loads a game from the database using the specified game ID.
 	 * It reconstructs the game state, including the board, players, and their positions.
+	 * @param id The unique identifier of the game to load from the database.
+	 * @return The loaded game as a Board instance, or null if the game could not be loaded.
 	 * @author @s235460
 	 */
 
@@ -297,6 +304,7 @@ class Repository implements IRepository {
 	 * Retrieves a list of all games stored in the database.
 	 * Each game is represented by a GameInDB instance, which includes its ID.
 	 * @author @s235460
+	 * @return A List of GameInDB instances representing all games available in the database.
 	 */
 
 	@Override
@@ -325,6 +333,8 @@ class Repository implements IRepository {
 	/**
 	 * Saves the state of all players in the game into the database.
 	 * This includes their position, color, and other relevant attributes.
+	 * @param game The game whose players' states are to be saved.
+	 * @throws SQLException If there is an error during the database update process.
 	 * @author @s235460
 	 */
 
@@ -354,6 +364,8 @@ class Repository implements IRepository {
 	 * Loads player data from the database for the specified game and populates the game's player list.
 	 * This method retrieves player information such as name, color, position, and heading from the database
 	 * and creates Player objects accordingly, adding them to the game.
+	 * @param game The game object for which players are being loaded from the database.
+	 * @throws SQLException If a database access error occurs or this method is called on a closed connection.
 	 * @author @s235460
 	 */
 
@@ -390,6 +402,8 @@ class Repository implements IRepository {
 	/**
 	 * Updates the database with the current state of all players in the game.
 	 * This method should be called to save the latest changes made to players' states.
+	 * @param game The game whose players' states are to be updated in the database.
+	 * @throws SQLException If there is an error during the database update process.
 	 * @author @s235460
 	 */
 
