@@ -52,14 +52,6 @@ public class Player extends Subject {
     private CommandCardField[] program;
     private CommandCardField[] cards;
 
-    Stack<CommandCard> deck;
-
-    private int cardsEach;
-
-    private Stack<CommandCard> discardpile;
-
-    private PlayerView playerView;
-
     public CommandCardField[] getCards() {
         return cards;
     }
@@ -91,10 +83,6 @@ public class Player extends Subject {
         for (int i = 0; i < cards.length; i++) {
             cards[i] = new CommandCardField(this);
         }
-
-        deck = new Stack<>();
-        discardpile = new Stack<>();
-        cardsEach = 8;
     }
 
     /**
@@ -161,9 +149,6 @@ public class Player extends Subject {
         return space;
     }
 
-    public Stack<CommandCard> getDiscardpile(){
-        return discardpile;
-    }
     /**
      * Set space
      *
@@ -228,11 +213,6 @@ public class Player extends Subject {
         return cards[i];
     }
 
-
-    public Stack<CommandCard> getCardDeck(){
-
-        return deck;
-    }
 }
 
 
