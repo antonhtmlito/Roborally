@@ -90,10 +90,21 @@ class Repository implements IRepository {
 
 
 	private Connector connector;
-	
+
+	/**
+	 * Constructs a Repository instance which acts as a bridge between the game's data model and the database.
+	 * It uses a given Connector instance to establish a connection to the database for executing SQL queries.
+	 * @author @s235460
+	 */
 	Repository(Connector connector){
 		this.connector = connector;
 	}
+
+	/**
+	 * Creates a new game in the database with the current state of the Board game.
+	 * It saves the game's basic information along with the state of each player.
+	 * @author @s235460
+	 */
 
 	@Override
 	public boolean createGameInDB(Board game) {
@@ -170,6 +181,12 @@ class Repository implements IRepository {
 		return false;
 	}
 
+	/**
+	 * Updates the state of the game in the database to reflect the current status of the Board instance.
+	 * This includes updating the current player, game phase, and step.
+	 * @author @s235460
+	 */
+
 	@Override
 	public boolean updateGameInDB(Board game) {
 		assert game.getGameId() != null;
@@ -213,7 +230,13 @@ class Repository implements IRepository {
 
 		return false;
 	}
-	
+
+	/**
+	 * Loads a game from the database using the specified game ID.
+	 * It reconstructs the game state, including the board, players, and their positions.
+	 * @author @s235460
+	 */
+
 	@Override
 	public Board loadGameFromDB(int id) {
 		Board game;
@@ -269,7 +292,13 @@ class Repository implements IRepository {
 		}
 		return null;
 	}
-	
+
+	/**
+	 * Retrieves a list of all games stored in the database.
+	 * Each game is represented by a GameInDB instance, which includes its ID.
+	 * @author @s235460
+	 */
+
 	@Override
 	public List<GameInDB> getGames() {
 		// TODO when there many games in the DB, fetching all available games
@@ -293,6 +322,12 @@ class Repository implements IRepository {
 		return result;		
 	}
 
+	/**
+	 * Saves the state of all players in the game into the database.
+	 * This includes their position, color, and other relevant attributes.
+	 * @author @s235460
+	 */
+
 	private void createPlayersInDB(Board game) throws SQLException {
 		// TODO code should be more defensive
 		PreparedStatement ps = getSelectPlayersStatementU();
@@ -314,7 +349,14 @@ class Repository implements IRepository {
 
 		rs.close();
 	}
-	
+
+	/**
+	 * Loads player data from the database for the specified game and populates the game's player list.
+	 * This method retrieves player information such as name, color, position, and heading from the database
+	 * and creates Player objects accordingly, adding them to the game.
+	 * @author @s235460
+	 */
+
 	private void loadPlayersFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersASCStatement();
 		ps.setInt(1, game.getGameId());
@@ -344,7 +386,13 @@ class Repository implements IRepository {
 		}
 		rs.close();
 	}
-	
+
+	/**
+	 * Updates the database with the current state of all players in the game.
+	 * This method should be called to save the latest changes made to players' states.
+	 * @author @s235460
+	 */
+
 	private void updatePlayersInDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersStatementU();
 		ps.setInt(1, game.getGameId());
@@ -366,6 +414,13 @@ class Repository implements IRepository {
 		
 		// TODO error handling/consistency check: check whether all players were updated
 	}
+
+	/**
+	 * SQL statement used to insert a new game into the database with specified attributes.
+	 * The statement inserts a new row into the 'Game' table with values for name, current player,
+	 * phase, and step.
+	 * @author @s235460
+	 */
 
 	private static final String SQL_INSERT_GAME =
 			"INSERT INTO Game(name, currentPlayer, phase, step) VALUES (?, ?, ?, ?)";
