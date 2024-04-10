@@ -52,6 +52,8 @@ public class Player extends Subject {
     private CommandCardField[] program;
     private CommandCardField[] cards;
 
+    private Stack<CommandCard> stack;
+
     public CommandCardField[] getCards() {
         return cards;
     }
@@ -83,6 +85,8 @@ public class Player extends Subject {
         for (int i = 0; i < cards.length; i++) {
             cards[i] = new CommandCardField(this);
         }
+
+        stack = new Stack<>();
     }
 
     /**
@@ -213,6 +217,9 @@ public class Player extends Subject {
         return cards[i];
     }
 
+    public Stack<CommandCard> getCardDeck() {
+        return stack;
+    }
 }
 
 

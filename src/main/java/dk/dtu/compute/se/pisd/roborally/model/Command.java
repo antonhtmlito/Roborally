@@ -61,6 +61,7 @@ public enum Command {
         this.options = Collections.unmodifiableList(Arrays.asList(options));
     }
 
+
     /**
      * Check if interactive
      * @return boolean
@@ -75,5 +76,18 @@ public enum Command {
      */
     public List<Command> getOptions() {
         return options;
+    }
+
+    public static Command getCommand(int index){
+        Command command = null;
+        switch (index) {
+            case 0 -> command = FORWARD;
+            case 1 -> command = RIGHT;
+            case 2 -> command = LEFT;
+            case 3 -> command = FAST_FORWARD;
+            case 4 -> command = OPTION_LEFT_RIGHT;
+            default -> System.out.println("Wrong cardIndex - int index " + index + " in Command.getCommand");
+        }
+        return command;
     }
 }

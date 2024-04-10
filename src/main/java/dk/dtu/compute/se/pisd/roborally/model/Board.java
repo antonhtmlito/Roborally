@@ -335,4 +335,8 @@ public class Board extends Subject {
     }
 
     private int counter;
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

@@ -144,7 +144,10 @@ class Repository implements IRepository {
 				// statement.close();
 
 				createPlayersInDB(game);
-
+				// create card stack
+				createCardStackInDB(game);
+				// create card field
+				createCardFieldsInDB(game);
 
 				// since current player is a foreign key, it can oly be
 				// inserted after the players are created, since MySQL does
@@ -215,6 +218,10 @@ class Repository implements IRepository {
 			rs.close();
 
 			updatePlayersInDB(game);
+			// update card stack
+			updateCardStacksInDB(game);
+			// update card field
+			updateCardFieldsInDB(game);
 
             connection.commit();
             connection.setAutoCommit(true);
@@ -287,6 +294,16 @@ class Repository implements IRepository {
 				return null;
 			}
 
+			// load card stack
+			loadCardStackFromDB(game);
+			// load card field
+			loadCardFieldsFromDB(game);
+			if (playerNo >= 0 && playerNo < game.getPlayersNumber()) {
+				game.setCurrentPlayer(game.getPlayer(playerNo));
+			} else {
+				return null;
+			}
+
 			/* TOODO this method needs to be implemented first
 			loadCardFieldsFromDB(game);
 			*/
@@ -356,7 +373,49 @@ class Repository implements IRepository {
 			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
 			rs.insertRow();
 		}
+		rs.close();
+	}
 
+	/**
+	 * create card fields in database
+	 * @param game Board
+	 * @throws SQLException
+	 */
+	private void createCardFieldsInDB(Board game) throws SQLException {
+		PreparedStatement ps = getSelectCardFieldStatement();
+		ps.setInt(1, game.getGameId());
+		ResultSet rs = ps.executeQuery();
+		for (int i = 0; i < game.getPlayersNumber(); i++) {
+			Player player = game.getPlayer(i);
+			CommandCardField[] cards = player.getCards();
+			CommandCardField[] program = player.getProgram();
+			for (int j = 0; j < cards.length; j++) {
+				rs.moveToInsertRow();
+				rs.updateInt("gameID", game.getGameId());
+				rs.updateInt(FIELD_PLAYERID, player.getPlayerId());
+				rs.updateInt(FIELD_TYPE, FIELD_TYPE_HAND);
+				rs.updateBoolean(FIELD_VISIBLE, cards[j].isVisible());
+				rs.updateInt(FIELD_POS, j);
+				if (cards[j].getCard() != null)
+					rs.updateObject(FIELD_COMMAND, cards[j].getCard().getCommand().ordinal());
+				else
+					rs.updateObject(FIELD_COMMAND, null);
+				rs.insertRow();
+			}
+			for (int j = 0; j < program.length; j++) {
+				rs.moveToInsertRow();
+				rs.updateInt("gameID", game.getGameId());
+				rs.updateInt(FIELD_PLAYERID, player.getPlayerId());
+				rs.updateInt(FIELD_TYPE, FIELD_TYPE_REGISTER);
+				rs.updateInt(FIELD_POS, j);
+				rs.updateBoolean(FIELD_VISIBLE, program[j].isVisible());
+				if (program[j].getCard() != null)
+					rs.updateObject(FIELD_COMMAND, program[j].getCard().getCommand().ordinal());
+				else
+					rs.updateObject(FIELD_COMMAND, null);
+				rs.insertRow();
+			}
+		}
 		rs.close();
 	}
 
@@ -558,4 +617,203 @@ class Repository implements IRepository {
 		return gameIds;
 	}
 
+	/**
+	 *  Update the card stack
+	 * @param game Board
+	 */
+	private void updateCardStacksInDB(Board game) {
+		System.out.println("  updateCardStacksInDB start. ");
+		Connection connection = connector.getConnection();
+		try {
+			connection.setAutoCommit(false);
+			PreparedStatement ps = getSelectCardStackStatement();
+			ps.setInt(1, game.getGameId());
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				rs.deleteRow();
+			}
+			rs.close();
+			createCardStackInDB(game);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("  updateCardStacksInDB end. ");
+	}
+
+	/**
+	 * get selected card stak statement
+	 * @return PreparedStatement
+	 */
+	private PreparedStatement getSelectCardStackStatement() {
+		if (select_cardstack_stmt == null) {
+			Connection connection = connector.getConnection();
+			try {
+				select_cardstack_stmt = connection.prepareStatement(
+						SQL_SELECT_CARDSTACK, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			} catch (SQLException throwables) {
+				throwables.printStackTrace();
+			}
+		}
+		return select_cardstack_stmt;
+	}
+
+	// variable used by getSelectCardStackStatement
+	private static final String SQL_SELECT_CARDSTACK = "SELECT * FROM CardStack WHERE gameID = ?";
+	private PreparedStatement select_cardstack_stmt = null;
+
+	/**
+	 * create card stack in database
+	 * @param game
+	 * @throws SQLException
+	 */
+	private void createCardStackInDB(Board game) throws SQLException {
+		PreparedStatement ps = getSelectCardStackStatement();
+		ps.setInt(1, game.getGameId());
+		ResultSet rs = ps.executeQuery();
+		for (int i = 0; i < game.getPlayersNumber(); i++) {
+			Player player = game.getPlayer(i);
+			Stack<CommandCard> stack = player.getCardDeck();
+			int deckpos = 0;
+			for (CommandCard c : stack) {
+				rs.moveToInsertRow();
+				rs.updateInt("gameID", game.getGameId());
+				rs.updateInt(CARDSTACK_PLAYERID, player.getPlayerId());
+				rs.updateInt(CARDSTACK_TYPE, CARDSTACK_TYPE_DECK);
+				rs.updateInt(CARDSTACK_POS, deckpos);
+				rs.updateObject(CARDSTACK_COMMAND, c.getCommand().ordinal());
+				rs.insertRow();
+				deckpos++;
+			}
+		}
+		rs.close();
+	}
+
+	/**
+	 * update card field in database
+	 * @param game Board
+	 */
+	private void updateCardFieldsInDB(Board game) {
+		Connection connection = connector.getConnection();
+		try {
+			connection.setAutoCommit(false);
+			PreparedStatement ps = getSelectCardFieldStatement();
+			ps.setInt(1, game.getGameId());
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				int playerId = rs.getInt(FIELD_PLAYERID);
+				Player player = game.getPlayer(playerId);
+				int pos = rs.getInt(FIELD_POS);
+				int type = rs.getInt(FIELD_TYPE);
+				boolean visible = false;
+				if (type == FIELD_TYPE_REGISTER) {
+					visible = player.getProgram()[pos].isVisible();
+					rs.updateBoolean(FIELD_VISIBLE, visible);
+					if (player.getProgram()[pos].getCard() != null)
+						rs.updateObject(FIELD_COMMAND, player.getProgram()[pos].getCard().getCommand().ordinal());
+					else
+						rs.updateObject(FIELD_COMMAND, null);
+				} else if (type == FIELD_TYPE_HAND) {
+					visible = player.getCards()[pos].isVisible();
+					rs.updateBoolean(FIELD_VISIBLE, visible);
+					if (player.getCards()[pos].getCard() != null)
+						rs.updateObject(FIELD_COMMAND, player.getCards()[pos].getCard().getCommand().ordinal());
+					else
+						rs.updateObject(FIELD_COMMAND, null);
+
+				}
+				rs.updateRow();
+
+			}
+			rs.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Get select card field statemnt
+	 * @return PreparedStatement
+	 */
+	private PreparedStatement getSelectCardFieldStatement() {
+		if (select_card_field_stmt == null) {
+			Connection connection = connector.getConnection();
+			try {
+				select_card_field_stmt = connection.prepareStatement(
+						SQL_SELECT_CARD_FIELDS, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			} catch (SQLException throwables) {
+				throwables.printStackTrace();
+			}
+		}
+		return select_card_field_stmt;
+	}
+
+	// The variables used by getSelectCardFieldStatement()
+	private static final String SQL_SELECT_CARD_FIELDS = "SELECT * FROM CardField WHERE gameID = ?";
+	private PreparedStatement select_card_field_stmt = null;
+
+	/**
+	 * load card stack from database
+	 * @param game Board
+	 * @throws SQLException
+	 */
+	private void loadCardStackFromDB(Board game) throws SQLException {
+		for (Player player : game.getPlayers()) {
+			player.getCardDeck().clear();
+		}
+		PreparedStatement ps = getSelectCardStackStatement();
+		ps.setInt(1, game.getGameId());
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			int playerId = rs.getInt(CARDSTACK_PLAYERID);
+			Player player = game.getPlayer(playerId);
+			int type = rs.getInt(CARDSTACK_TYPE);
+			Object c = rs.getObject(CARDSTACK_COMMAND);
+			if (c != null) {
+				Command command = Command.getCommand(rs.getInt(CARDSTACK_COMMAND));
+				if (type == CARDSTACK_TYPE_DECK) {
+					player.getCardDeck().push(new CommandCard(command));
+				}
+			}
+		}
+		rs.close();
+	}
+
+
+	/**
+	 * load card fields from database
+	 * @param game Board
+	 * @throws SQLException
+	 */
+	private void loadCardFieldsFromDB(Board game) throws SQLException {
+		PreparedStatement ps = getSelectCardFieldStatement();
+		ps.setInt(1, game.getGameId());
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			int playerId = rs.getInt(FIELD_PLAYERID);
+			Player player = game.getPlayer(playerId);
+			int type = rs.getInt(FIELD_TYPE);
+			int pos = rs.getInt(FIELD_POS);
+			CommandCardField field;
+			if (type == FIELD_TYPE_REGISTER) {
+				field = player.getProgramField(pos);
+			} else if (type == FIELD_TYPE_HAND) {
+				field = player.getCardField(pos);
+			} else {
+				field = null;
+			}
+			if (field != null) {
+				field.setVisible(rs.getBoolean(FIELD_VISIBLE));
+				Object c = rs.getObject(FIELD_COMMAND);
+				if (c != null) {
+					Command card = Command.values()[rs.getInt(FIELD_COMMAND)];
+					field.setCard(new CommandCard(card));
+				}
+			}
+		}
+		rs.close();
+	}
 }
+
+
