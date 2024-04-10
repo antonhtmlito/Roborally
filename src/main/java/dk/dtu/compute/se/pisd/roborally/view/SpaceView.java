@@ -119,24 +119,26 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.setStyle("-fx-background-color: brown;");
         */}
     }
-    /**
-     *
-     * This method create a wall on the board and collision
-     * @author William Wegener Kofoed, S235451
-     *
-     */
+
     @Override
     public void updateView(Subject subject) {
 
-        Rectangle canvasBoundary = new Rectangle(2 * SPACE_WIDTH, 2 * SPACE_HEIGHT, SPACE_WIDTH, 5);
+
 
         if (subject == this.space) {
             updatePlayer();
             updateCheckpoint();
+            updateWall();
         }
 
-        // wall
-        if (space.x == 2 && space.y == 2) {
+
+    }
+    /**
+     * This method create a wall on the board
+     * @author William Wegener Kofoed, S235451
+     */
+    private void updateWall(){
+        if(space.isHasWall()){
             Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
             GraphicsContext gc = canvas.getGraphicsContext2D();
             gc.setStroke(Color.RED);
@@ -144,16 +146,8 @@ public class SpaceView extends StackPane implements ViewObserver {
             gc.setLineCap(StrokeLineCap.ROUND);
             gc.strokeLine(2, SPACE_HEIGHT - 2, SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
             this.getChildren().add(canvas);
-
-            // Collision check (corrected)
-            Bounds canvasBounds = canvasBoundary.getBoundsInLocal();  // Get Bounds from Rectangle
-            if (getBoundsInLocal().intersects(canvasBounds)) {  // Use Bounds for intersection
-                // Player is colliding with canvas, handle it here (e.g., prevent movement)
-                System.out.println("Player collided with canvas!");  // Replace with your desired action
-            }
         }
     }
-
 
     /**
      * This code is how the checkpoint token should look like
