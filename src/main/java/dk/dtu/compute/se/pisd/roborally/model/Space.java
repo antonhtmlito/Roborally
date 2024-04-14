@@ -56,6 +56,7 @@ public class Space extends Subject {
      */
 
     private boolean isCheckpoint;
+
     public boolean isCheckpoint(){
         return isCheckpoint;
     }
@@ -65,14 +66,6 @@ public class Space extends Subject {
 
     private List<Heading> walls = new ArrayList<>();
     private List<FieldAction> actions = new ArrayList<>();
-
-    /**
-     * @author Anton Fu Hou Dong, s235460
-     * @param hasWall boolean
-     */
-    public void setHasWall(boolean hasWall) {
-        this.hasWall = hasWall;
-    }
 
     /**
      * @author Anton Fu Hou Dong, s235460
@@ -113,7 +106,8 @@ public class Space extends Subject {
     }
 
 
-    private boolean hasWall;
+
+
 
     private Player player;
 
@@ -128,6 +122,7 @@ public class Space extends Subject {
         this.board = board;
         this.x = x;
         this.y = y;
+
         player = null;
     }
 

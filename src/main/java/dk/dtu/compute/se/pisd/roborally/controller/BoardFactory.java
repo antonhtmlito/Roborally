@@ -37,11 +37,35 @@ public class BoardFactory {
     }
 
     /**
+     * This method creates coordinates for the spaces to have gears
+     * on them and specifies which spaces should have gears as a set
+     * of coordinates
+     *
+     * @author Jonas Woetmann Larsen, S235446
+     */
+    public void setGearSpaces(Board board,int[][] gearSpaceCoordinates) {
+
+        for (int[] coordinates : gearSpaceCoordinates) {
+            int x = coordinates[0];
+            int y = coordinates[1];
+            Space space = board.getSpace(x, y);
+            if (space != null) {
+                space.setHasGear(true);
+            }
+
+        }
+    }
+
+
+
+    /**
      * Creates a new board of given name of a board, which indicates
      * which type of board should be created. For now the name is ignored.
      *
      * @param name the given name board
      * @return the new board corresponding to that name
+     *
+     * @author William Wegener Kofoed, S235451
      */
     public Board createBoard(String name) {
         Board board;
@@ -57,6 +81,7 @@ public class BoardFactory {
         ConveyorBelt action  = new ConveyorBelt();
         action.setHeading(Heading.WEST);
         space.getActions().add(action);
+
 
         space = board.getSpace(1,0);
         space.getWalls().add(Heading.NORTH);
@@ -87,6 +112,11 @@ public class BoardFactory {
         space.getWalls().add(Heading.EAST);
         space.getWalls().add(Heading.WEST);
 
+        int[][] gearSpaceCoordinates = {
+                {5, 2},
+                {2, 4},
+        };
+        setGearSpaces(board,gearSpaceCoordinates);
 
         return board;
     }

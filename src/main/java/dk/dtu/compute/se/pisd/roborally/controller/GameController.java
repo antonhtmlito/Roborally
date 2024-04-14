@@ -377,30 +377,5 @@ public class GameController {
         }
     }
 
-    /**
-     * This method creates coordinates for the spaces to have gears
-     * on them and specifies which spaces should have gears as a set
-     * of coordinates
-     *
-     * @author Jonas Woetmann Larsen, S235446
-     */
-    public void setGearSpaces() {
-        int[][] gearSpaceCoordinates = {
-                {5, 2},
-                {2, 4},
-        };
-
-        Board board = this.board;
-
-        for (int[] coordinates : gearSpaceCoordinates) {
-            int x = coordinates[0];
-            int y = coordinates[1];
-            Space space = board.getSpace(x, y);
-            if (space != null) {
-                space.setHasGear(true);
-            }
-
-        }
-    }
 
 }
