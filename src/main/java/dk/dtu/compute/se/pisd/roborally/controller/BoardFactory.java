@@ -81,6 +81,13 @@ public class BoardFactory {
         action.setHeading(Heading.WEST);
         space.getActions().add(action);
 
+        space = board.getSpace(7,7);
+        space.getWalls().add(Heading.SOUTH);
+        space.getWalls().add(Heading.NORTH);
+        space.getWalls().add(Heading.EAST);
+        space.getWalls().add(Heading.WEST);
+
+
         return board;
     }
 

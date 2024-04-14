@@ -31,6 +31,8 @@ import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import java.util.ArrayList;
 import java.util.List;
 
+import static dk.dtu.compute.se.pisd.roborally.model.Heading.*;
+
 /**
  * Space class of the Roborally game
  *
@@ -76,19 +78,40 @@ public class Space extends Subject {
      * @author Anton Fu Hou Dong, s235460
      * @return boolean
      */
-    public boolean isHasWall() {
-        // just hack to hard code a wall here, need to modify later
-        if(x==3 && y==4)
-            return true;
-        else if(x==4 && y==3)
-            return true;
-        else if(x==2 && y==5)
-            return true;
-        else if(x==1 && y==6)
-            return true;
-
-        return hasWall;
+    public boolean hasCurrentWall(Player player) {
+        var heading = player.getHeading();
+        if(EAST.equals(heading)){
+            return walls.contains(EAST);
+        }
+        if(WEST.equals(heading)){
+            return walls.contains(WEST);
+        }
+        if(NORTH.equals(heading)){
+            return walls.contains(NORTH);
+        }
+        if(SOUTH.equals(heading)){
+            return walls.contains(SOUTH);
+        }
+        return false;
     }
+
+    public boolean hasTargetWall(Player player) {
+        var heading = player.getHeading();
+        if(EAST.equals(heading)){
+            return walls.contains(WEST);
+        }
+        if(WEST.equals(heading)){
+            return walls.contains(EAST);
+        }
+        if(NORTH.equals(heading)){
+            return walls.contains(SOUTH);
+        }
+        if(SOUTH.equals(heading)){
+            return walls.contains(NORTH);
+        }
+        return false;
+    }
+
 
     private boolean hasWall;
 

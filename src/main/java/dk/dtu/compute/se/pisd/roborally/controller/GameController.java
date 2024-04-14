@@ -30,15 +30,17 @@ import org.jetbrains.annotations.NotNull;
 /**
  * ...
  * This is the class that controls the game
- * @author Ekkart Kindler, ekki@dtu.dk
  *
+ * @author Ekkart Kindler, ekki@dtu.dk
  */
 public class GameController {
 
     final public Board board;
 
 
-    public GameController(@NotNull Board board) {this.board = board;}
+    public GameController(@NotNull Board board) {
+        this.board = board;
+    }
 
     /**
      * This is just some dummy controller operation to make a simple move to see something
@@ -46,9 +48,9 @@ public class GameController {
      *
      * @param space the space to which the current player should move
      */
-    public void moveCurrentPlayerToSpace(@NotNull Space space)  {
+    public void moveCurrentPlayerToSpace(@NotNull Space space) {
         Player current = board.getCurrentPlayer();
-        if(current != null && space.getPlayer() == null) {
+        if (current != null && space.getPlayer() == null) {
             current.setSpace(space);
             int currentNumber = board.getPlayerNumber(current);
             int nextPlayerNumber = (currentNumber + 1) % board.getPlayersNumber();
@@ -154,44 +156,44 @@ public class GameController {
 
 
     /**
-     *
      * This method executes the command option and continues.
-     * @author William Wegener Kofoed, S235451
+     *
      * @param option Command
+     * @author William Wegener Kofoed, S235451
      */
     public void executeCommandOptionAndContinue(@NotNull Command option) {
         Player currentPlayer = board.getCurrentPlayer();
         if (currentPlayer != null &&
                 board.getPhase() == Phase.PLAYER_INTERACTION &&
-                option != null){
-                board.setPhase(Phase.ACTIVATION);
-                executeCommand(currentPlayer, option);
+                option != null) {
+            board.setPhase(Phase.ACTIVATION);
+            executeCommand(currentPlayer, option);
 
-                int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
-                if (nextPlayerNumber < board.getPlayersNumber()); {
-                    board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
+            int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
+            if (nextPlayerNumber < board.getPlayersNumber()) ;
+            {
+                board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
             }
         } else {
-           int step = board.getStep() +1;
+            int step = board.getStep() + 1;
 
-           if (step < Player.NO_REGISTERS){
-               makeProgramFieldsVisible(step);
-               board.setStep(step);
-               board.setCurrentPlayer(board.getPlayer(0));
-           } else {
-               startProgrammingPhase();
-           }
+            if (step < Player.NO_REGISTERS) {
+                makeProgramFieldsVisible(step);
+                board.setStep(step);
+                board.setCurrentPlayer(board.getPlayer(0));
+            } else {
+                startProgrammingPhase();
+            }
 
         }
 
     }
+
     /**
-     *
      * This method checks whether there is a card and what card it is
      * and then executes the step based on the card
      *
      * @author Jonas Woetmann Larsen, S235446
-     *
      */
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
@@ -202,8 +204,8 @@ public class GameController {
                 if (card != null) {
                     Command command = card.command;
                     if (command.isInteractive()) {
-                    board.setPhase(Phase.PLAYER_INTERACTION);
-                    return;
+                        board.setPhase(Phase.PLAYER_INTERACTION);
+                        return;
                     }
 
                     executeCommand(currentPlayer, command);
@@ -233,7 +235,8 @@ public class GameController {
 
     /**
      * Execute the command
-     * @param player Player
+     *
+     * @param player  Player
      * @param command Command
      */
     private void executeCommand(@NotNull Player player, Command command) {
@@ -262,18 +265,18 @@ public class GameController {
     }
 
     /**
-     *
      * This method makes the player move forward when a "FWD" card has been played.
      * It also checks to see if the target has a gear and rotates the player accordingly.
      * It also checks if there is a wall, if there is a wall the player connot move thourgh it.
-     * @author Anton Fu Hou Dong, s235460, Jonas Woetmann Larsen, S235446, @author William Wegener Kofoed, S235451
-     * @param player Player
      *
+     * @param player Player
+     * @author Anton Fu Hou Dong, s235460, Jonas Woetmann Larsen, S235446, @author William Wegener Kofoed, S235451
      */
     public void moveForward(@NotNull Player player) {
 
         Space current = player.getSpace();
         Space target = board.getNeighbour(current, player.getHeading());
+
 
         if (target.hasGear()) {
             player.setSpace(target);
@@ -293,8 +296,9 @@ public class GameController {
             }
             return;
         }
+
         // Check if the target space has a wall
-        if (target.isHasWall()) {
+        if (current.hasCurrentWall(player) || target.hasTargetWall(player)) {
             System.out.println("Cannot move forward: Wall detected in the target space.");
         } else {
             // If there's no wall, move the player to the target space
@@ -303,16 +307,15 @@ public class GameController {
         }
 
 
+
     }
 
     /**
-     *
      * This method is similar to the Forward method but moves the player
      * two spaces forward when playing a "Fast FWD" card. And again it
      * checks whether the target is a gear or not
      *
      * @author Jonas Woetmann Larsen, S235446
-     *
      */
     public void fastForward(@NotNull Player player) {
         System.out.println("++++++++  fastForward");
@@ -322,15 +325,16 @@ public class GameController {
 
     /**
      * This makes player turn to right (Clockwise)
+     *
      * @param player Player
      */
     public void turnRight(@NotNull Player player) {
         System.out.println("++++++++  turnRight");
-        if(player.getHeading() == Heading.SOUTH)
+        if (player.getHeading() == Heading.SOUTH)
             player.setHeading(Heading.WEST);
-        else if(player.getHeading() == Heading.NORTH)
+        else if (player.getHeading() == Heading.NORTH)
             player.setHeading(Heading.EAST);
-        else if(player.getHeading() == Heading.WEST)
+        else if (player.getHeading() == Heading.WEST)
             player.setHeading(Heading.NORTH);
         else
             player.setHeading(Heading.SOUTH);
@@ -338,15 +342,16 @@ public class GameController {
 
     /**
      * This makes player turn to left (Counter-Clockwise)
+     *
      * @param player Player
      */
     public void turnLeft(@NotNull Player player) {
         System.out.println("++++++++  turnLeft");
-        if(player.getHeading() == Heading.SOUTH)
+        if (player.getHeading() == Heading.SOUTH)
             player.setHeading(Heading.EAST);
-        else if(player.getHeading() == Heading.NORTH)
+        else if (player.getHeading() == Heading.NORTH)
             player.setHeading(Heading.WEST);
-        else if(player.getHeading() == Heading.WEST)
+        else if (player.getHeading() == Heading.WEST)
             player.setHeading(Heading.SOUTH);
         else
             player.setHeading(Heading.NORTH);
@@ -373,18 +378,16 @@ public class GameController {
     }
 
     /**
-     *
      * This method creates coordinates for the spaces to have gears
      * on them and specifies which spaces should have gears as a set
      * of coordinates
      *
      * @author Jonas Woetmann Larsen, S235446
-     *
      */
     public void setGearSpaces() {
         int[][] gearSpaceCoordinates = {
-                {5,2},
-                {2,4},
+                {5, 2},
+                {2, 4},
         };
 
         Board board = this.board;

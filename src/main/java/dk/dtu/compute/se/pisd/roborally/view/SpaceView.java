@@ -23,6 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
+import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 
@@ -42,7 +43,6 @@ import org.jetbrains.annotations.NotNull;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
  */
 public class SpaceView extends StackPane implements ViewObserver {
 
@@ -83,14 +83,12 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     *
      * This method updates the player on the board so as when a move
      * is made the arrow indicating the players robot will turn or move
      * and the prior arrow will disappear. It also updates the gear so
      * it doesn't disappear when a player lands on it
      *
      * @author Jonas Woetmann Larsen, S235446
-     *
      */
     private void updatePlayer() {
         boolean gearSymbolExists = gearSymbol != null && this.getChildren().contains(gearSymbol);
@@ -105,48 +103,98 @@ public class SpaceView extends StackPane implements ViewObserver {
         if (player != null) {
             Polygon arrow = new Polygon(0.0, 0.0,
                     10.0, 20.0,
-                    20.0, 0.0 );
+                    20.0, 0.0);
             try {
                 arrow.setFill(Color.valueOf(player.getColor()));
             } catch (Exception e) {
                 arrow.setFill(Color.MEDIUMPURPLE);
             }
 
-            arrow.setRotate((90*player.getHeading().ordinal())%360);
+            arrow.setRotate((90 * player.getHeading().ordinal()) % 360);
             this.getChildren().add(arrow);
         /*} else if(space.isHasWall()) {
             // show a wall here, need optimize later
             this.setStyle("-fx-background-color: brown;");
-        */}
+        */
+        }
     }
 
     @Override
     public void updateView(Subject subject) {
 
 
-
         if (subject == this.space) {
             updatePlayer();
             updateCheckpoint();
-            updateWall();
+            updateWalls();
         }
 
 
     }
+
+    private void updateWalls() {
+        var walls = space.getWalls();
+
+        if (walls.contains(Heading.SOUTH)) {
+            updateSouthWall();
+        }
+        if (walls.contains((Heading.NORTH))) {
+            updateNorthWall();
+        }
+        if (walls.contains((Heading.EAST))) {
+            updateEastWall();
+        }
+        if (walls.contains((Heading.WEST))) {
+            updateWestWall();
+        }
+    }
+
+
     /**
      * This method create a wall on the board
+     *
      * @author William Wegener Kofoed, S235451
+     * SOUTH, WEST, NORTH, EAST;
      */
-    private void updateWall(){
-        if(space.isHasWall()){
-            Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
-            GraphicsContext gc = canvas.getGraphicsContext2D();
-            gc.setStroke(Color.RED);
-            gc.setLineWidth(5);
-            gc.setLineCap(StrokeLineCap.ROUND);
-            gc.strokeLine(2, SPACE_HEIGHT - 2, SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
-            this.getChildren().add(canvas);
-        }
+    private void updateSouthWall() {
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setStroke(Color.RED);
+        gc.setLineWidth(5);
+        gc.setLineCap(StrokeLineCap.ROUND);
+        gc.strokeLine(2, SPACE_HEIGHT - 2, SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
+        this.getChildren().add(canvas);
+    }
+
+    private void updateWestWall() {
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setStroke(Color.RED);
+        gc.setLineWidth(5);
+        gc.setLineCap(StrokeLineCap.ROUND);
+        gc.strokeLine(2, 2, 2, SPACE_HEIGHT - 2);
+        this.getChildren().add(canvas);
+    }
+
+    private void updateEastWall() {
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setStroke(Color.RED);
+        gc.setLineWidth(5);
+        gc.setLineCap(StrokeLineCap.ROUND);
+        gc.strokeLine(SPACE_WIDTH - 2, 2, SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
+        this.getChildren().add(canvas);
+    }
+
+    private void updateNorthWall() {
+
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setStroke(Color.RED);
+        gc.setLineWidth(5);
+        gc.setLineCap(StrokeLineCap.ROUND);
+        gc.strokeLine(2, 2, SPACE_WIDTH - 2, 2);
+        this.getChildren().add(canvas);
     }
 
     /**
@@ -155,8 +203,8 @@ public class SpaceView extends StackPane implements ViewObserver {
      *
      * @author Martin Dahl Lund, s235454
      */
-    private void updateCheckpoint(){
-        if (space.isCheckpoint()){
+    private void updateCheckpoint() {
+        if (space.isCheckpoint()) {
             Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
             GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -168,12 +216,10 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     *
      * This method adds the gear symbol when called upon.
      * Its shape is also defined here.
      *
      * @author Jonas Woetmann Larsen, S235446
-     *
      */
     public void addGearSymbol() {
         if (gearSymbol == null) {
@@ -188,7 +234,6 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(gearSymbol);
         }
     }
-
 
 
 }
