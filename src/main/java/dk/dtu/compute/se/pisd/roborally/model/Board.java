@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import javafx.application.Application;
 import org.jetbrains.annotations.NotNull;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
@@ -49,6 +50,8 @@ public class Board extends Subject {
     private Integer gameId;
 
     private final Space[][] spaces;
+
+    private GameController gameController;
 
     private final List<Player> players = new ArrayList<>();
 
@@ -112,6 +115,21 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * Get game controller
+     * @return GameController
+     */
+    public GameController getGameController() {
+        return gameController;
+    }
+
+    /**
+     * Set game controller
+     * @param gameController GameController
+     */
+    public void setGameController(GameController gameController) {
+        this.gameController = gameController;
+    }
     /**
      * This method gets the GameId.
      * @return Integer

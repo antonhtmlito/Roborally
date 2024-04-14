@@ -32,6 +32,7 @@ import dk.dtu.compute.se.pisd.roborally.RoboRally;
 import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
+import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -56,6 +57,7 @@ public class AppController implements Observer {
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
 
+    final private List<String> PLAYER_BOARDS = Arrays.asList("Default", "easyBoard", "hardBoard");
     final private RoboRally roboRally;
 
     private GameController gameController;
@@ -86,10 +88,28 @@ public class AppController implements Observer {
                 }
             }
 
-            // XXX the board should eventually be created programmatically or loaded from a file
-            //     here we just create an empty board with the required number of players.
-            //Board board = new Board(8,8);
-            var board = BoardFactory.getInstance().createBoard("Game");
+            Board board = null;
+
+            ChoiceDialog<String> boardChoice = new ChoiceDialog<>(PLAYER_BOARDS.get(0), PLAYER_BOARDS);
+            dialog.setTitle("Game Board");
+            dialog.setHeaderText("Select board");
+            Optional<String> boardResult = boardChoice.showAndWait();
+
+            if (boardResult.isPresent()) {
+                if (boardChoice.getResult() == PLAYER_BOARDS.get(0)) {
+                    System.out.println("Choose default board");
+                    board = LoadBoard.loadBoard(null);
+                } /*else if (boardChoice.getResult() == PLAYER_BOARDS.get(1)) {
+                    board = LoadBoard.loadBoard(PLAYER_BOARDS.get(1));
+                } else if (boardChoice.getResult() == PLAYER_BOARDS.get(2)) {
+                    board = LoadBoard.loadBoard(PLAYER_BOARDS.get(2));
+                }*/
+            }
+            else {
+                return;
+            }
+
+            //board = BoardFactory.getInstance().createBoard("Game");
             gameController = new GameController(board);
 
             int no = result.get();

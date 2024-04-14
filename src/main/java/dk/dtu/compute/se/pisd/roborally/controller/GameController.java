@@ -40,6 +40,7 @@ public class GameController {
 
     public GameController(@NotNull Board board) {
         this.board = board;
+        board.setGameController(this);
     }
 
     /**
@@ -214,6 +215,14 @@ public class GameController {
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
+                    for (Player player : board.getPlayers()){
+                        Space space = player.getSpace();
+                        if (!space.getActions().isEmpty()){
+                            for (FieldAction fieldAction : space.getActions()) {
+                                fieldAction.doAction(board.getGameController(), space);
+                            }
+                        }
+                    }
                     step++;
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
@@ -279,6 +288,7 @@ public class GameController {
 
 
         if (target.hasGear()) {
+
             player.setSpace(target);
             switch (player.getHeading()) {
                 case NORTH:

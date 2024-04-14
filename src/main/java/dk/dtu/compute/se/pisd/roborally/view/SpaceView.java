@@ -22,7 +22,8 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.controller.GameController;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
+import dk.dtu.compute.se.pisd.roborally.controller.GearsFieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
@@ -77,8 +78,12 @@ public class SpaceView extends StackPane implements ViewObserver {
         space.attach(this);
         update(space);
 
-        if (space.hasGear()) {
-            addGearSymbol();
+        if(!space.getActions().isEmpty()) {
+            FieldAction fieldAction = space.getActions().get(0);
+            if(fieldAction instanceof GearsFieldAction) {
+                System.out.println("space on " + space.x + "," + space.y + " has action");
+                addGearSymbol();
+            }
         }
     }
 

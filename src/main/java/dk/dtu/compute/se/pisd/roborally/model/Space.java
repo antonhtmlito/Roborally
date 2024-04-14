@@ -64,8 +64,8 @@ public class Space extends Subject {
         this.isCheckpoint = isCheckpoint;
     }
 
-    private List<Heading> walls = new ArrayList<>();
-    private List<FieldAction> actions = new ArrayList<>();
+    private List<Heading> walls;
+    private List<FieldAction> actions;
 
     /**
      * @author Anton Fu Hou Dong, s235460
@@ -105,12 +105,7 @@ public class Space extends Subject {
         return false;
     }
 
-
-
-
-
     private Player player;
-
 
     /**
      * Constructor of Space
@@ -122,8 +117,9 @@ public class Space extends Subject {
         this.board = board;
         this.x = x;
         this.y = y;
-
         player = null;
+        walls = new ArrayList<Heading>();
+        actions = new ArrayList<>();
     }
 
     /**
@@ -174,6 +170,14 @@ public class Space extends Subject {
 
     public List<Heading> getWalls() {
         return walls;
+    }
+
+    /**
+     * Add a wall
+     * @param wall
+     */
+    public void addWall(Heading wall){
+        walls.add(wall);
     }
 
     public List<FieldAction> getActions() {

@@ -1,4 +1,53 @@
 {
   "width": 8,
-  "height": 8
+  "height": 8,
+  "spaces": [
+    {
+      "walls": [
+        "SOUTH"
+      ],
+      "x": 3,
+      "y": 0
+    },
+    {
+      "walls": [
+        "NORTH"
+      ],
+      "x": 4,
+      "y": 5
+    },
+    {
+      "walls": [
+        "WEST"
+      ],
+      "x": 2,
+      "y": 4
+    },
+    {
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.GearsFieldAction",
+          "INSTANCE": {
+            "heading": "NORTH"
+          }
+        }
+      ],
+      "x": 3,
+      "y": 4
+    },
+    {
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.GearsFieldAction",
+          "INSTANCE": {
+            "heading": "EAST"
+          }
+        }
+      ],
+      "x": 5,
+      "y": 2
+    }
+  ]
 }

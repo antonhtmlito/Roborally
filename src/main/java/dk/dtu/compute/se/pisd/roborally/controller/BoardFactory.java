@@ -77,8 +77,9 @@ public class BoardFactory {
 
         // add some walls, actions and checkpoints to some spaces
         Space space = board.getSpace(0,0);
-        space.getWalls().add(Heading.SOUTH);
         ConveyorBelt action  = new ConveyorBelt();
+        /*
+        space.getWalls().add(Heading.SOUTH);
         action.setHeading(Heading.WEST);
         space.getActions().add(action);
 
@@ -100,7 +101,7 @@ public class BoardFactory {
         action  = new ConveyorBelt();
         action.setHeading(Heading.WEST);
         space.getActions().add(action);
-
+        */
         space = board.getSpace(6,5);
         action  = new ConveyorBelt();
         action.setHeading(Heading.WEST);

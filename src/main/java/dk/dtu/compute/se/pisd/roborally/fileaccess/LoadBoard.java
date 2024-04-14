@@ -51,6 +51,7 @@ public class LoadBoard {
 
         ClassLoader classLoader = LoadBoard.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream(BOARDSFOLDER + "/" + boardname + "." + JSON_EXT);
+        System.out.println("LoadBoard " + BOARDSFOLDER + "/" + boardname + "." + JSON_EXT);
         if (inputStream == null) {
             // TODO these constants should be defined somewhere
             return new Board(8,8);
@@ -73,6 +74,7 @@ public class LoadBoard {
 			for (SpaceTemplate spaceTemplate: template.spaces) {
 			    Space space = result.getSpace(spaceTemplate.x, spaceTemplate.y);
 			    if (space != null) {
+                    System.out.println("space on " + spaceTemplate.x + ", " + spaceTemplate.y + " found.");
                     space.getActions().addAll(spaceTemplate.actions);
                     space.getWalls().addAll(spaceTemplate.walls);
                 }
