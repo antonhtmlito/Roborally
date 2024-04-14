@@ -131,7 +131,11 @@ public class SpaceView extends StackPane implements ViewObserver {
 
 
     }
-
+    /**
+     * This method updates all the walls on the board
+     *
+     * @author William Wegener Kofoed, S235451
+     */
     private void updateWalls() {
         var walls = space.getWalls();
 
@@ -151,10 +155,10 @@ public class SpaceView extends StackPane implements ViewObserver {
 
 
     /**
-     * This method create a wall on the board
+     * These methods create a wall for SOUTH, WEST, NORTH, EAST; on the board
      *
      * @author William Wegener Kofoed, S235451
-     * SOUTH, WEST, NORTH, EAST;
+
      */
     private void updateSouthWall() {
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
