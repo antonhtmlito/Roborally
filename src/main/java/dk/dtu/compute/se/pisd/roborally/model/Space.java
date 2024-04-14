@@ -54,7 +54,7 @@ public class Space extends Subject {
      *
      * @author Martin Dahl Lund, s235454
      */
-
+    
     private boolean isCheckpoint;
 
     public boolean isCheckpoint(){

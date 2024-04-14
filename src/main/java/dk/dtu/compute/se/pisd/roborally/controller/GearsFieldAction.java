@@ -10,6 +10,7 @@ public class GearsFieldAction extends FieldAction{
     public Heading heading;
 
     public GearsFieldAction(){
+        System.out.println("GearsFieldAction");
     }
 
 

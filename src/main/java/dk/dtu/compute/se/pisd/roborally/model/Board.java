@@ -82,7 +82,7 @@ public class Board extends Subject {
         }
         this.stepMode = false;
 
-        initializeCheckpoints();
+        //initializeCheckpoints();
     }
     /**
      * This is a constructor of the Board class.
@@ -125,7 +125,7 @@ public class Board extends Subject {
 
     /**
      * Set game controller
-     * @param gameController GameController
+     * @param gameController
      */
     public void setGameController(GameController gameController) {
         this.gameController = gameController;

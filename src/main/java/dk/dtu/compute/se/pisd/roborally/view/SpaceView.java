@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.CheckPointFieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.GearsFieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
@@ -29,8 +30,10 @@ import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 
 import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 
 import javafx.scene.layout.StackPane;
@@ -81,8 +84,12 @@ public class SpaceView extends StackPane implements ViewObserver {
         if(!space.getActions().isEmpty()) {
             FieldAction fieldAction = space.getActions().get(0);
             if(fieldAction instanceof GearsFieldAction) {
-                System.out.println("space on " + space.x + "," + space.y + " has action");
+                System.out.println("space on " + space.x + "," + space.y + " has GearsFieldAction");
                 addGearSymbol();
+            } else if(fieldAction instanceof CheckPointFieldAction) {
+                space.setCheckpoint(true);
+                updateCheckpoint();
+                System.out.println("space on " + space.x + "," + space.y + " has CheckPointFieldAction");
             }
         }
     }
@@ -126,15 +133,11 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     @Override
     public void updateView(Subject subject) {
-
-
         if (subject == this.space) {
             updatePlayer();
             updateCheckpoint();
             updateWalls();
         }
-
-
     }
     /**
      * This method updates all the walls on the board
@@ -219,7 +222,10 @@ public class SpaceView extends StackPane implements ViewObserver {
 
             gc.setFill(Color.GOLD);
             gc.fillOval(SPACE_WIDTH * 0.2, SPACE_HEIGHT * 0.2, SPACE_WIDTH * 0.6, SPACE_HEIGHT * 0.6);
-
+            gc.setFill(Color.RED);
+            CheckPointFieldAction cpfa = (CheckPointFieldAction) space.getActions().get(0);
+            System.out.println("CheckPointFieldAction id " + cpfa.getCheckPointFieldId());
+            gc.fillText(cpfa.getCheckPointFieldId() + "", 15, 20, 44);
             this.getChildren().add(canvas);
         }
     }

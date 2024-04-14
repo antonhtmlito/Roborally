@@ -48,6 +48,45 @@
       ],
       "x": 5,
       "y": 2
+    },
+    {
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.CheckPointFieldAction",
+          "INSTANCE": {
+            "checkPointFieldId": 0
+          }
+        }
+      ],
+      "x": 3,
+      "y": 5
+    },
+    {
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.CheckPointFieldAction",
+          "INSTANCE": {
+            "checkPointFieldId": 1
+          }
+        }
+      ],
+      "x": 4,
+      "y": 1
+    },
+    {
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.CheckPointFieldAction",
+          "INSTANCE": {
+            "checkPointFieldId": 2
+          }
+        }
+      ],
+      "x": 7,
+      "y": 7
     }
   ]
 }
