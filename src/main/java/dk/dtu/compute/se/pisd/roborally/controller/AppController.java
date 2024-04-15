@@ -57,7 +57,7 @@ public class AppController implements Observer {
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
 
-    final private List<String> PLAYER_BOARDS = Arrays.asList("Default", "easyBoard", "hardBoard");
+    final private List<String> PLAYER_BOARDS = Arrays.asList("defaultboard", "easyBoard", "hardBoard");
     final private RoboRally roboRally;
 
     private GameController gameController;
@@ -98,12 +98,12 @@ public class AppController implements Observer {
             if (boardResult.isPresent()) {
                 if (boardChoice.getResult() == PLAYER_BOARDS.get(0)) {
                     System.out.println("Choose default board");
-                    board = LoadBoard.loadBoard(null);
-                } /*else if (boardChoice.getResult() == PLAYER_BOARDS.get(1)) {
+                    board = LoadBoard.loadBoard(PLAYER_BOARDS.get(0));
+                } else if (boardChoice.getResult() == PLAYER_BOARDS.get(1)) {
                     board = LoadBoard.loadBoard(PLAYER_BOARDS.get(1));
                 } else if (boardChoice.getResult() == PLAYER_BOARDS.get(2)) {
                     board = LoadBoard.loadBoard(PLAYER_BOARDS.get(2));
-                }*/
+                }
             }
             else {
                 return;

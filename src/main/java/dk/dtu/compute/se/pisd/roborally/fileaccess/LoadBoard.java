@@ -40,15 +40,22 @@ import java.io.*;
  */
 public class LoadBoard {
 
+    private static String gameBoard;
     private static final String BOARDSFOLDER = "boards";
     private static final String DEFAULTBOARD = "defaultboard";
     private static final String JSON_EXT = "json";
+
+    public static String getGameBoard() {
+        return gameBoard;
+    }
 
     public static Board loadBoard(String boardname) {
         if (boardname == null) {
             boardname = DEFAULTBOARD;
         }
 
+        gameBoard = boardname;
+        System.out.println("loadBoard " + boardname);
         ClassLoader classLoader = LoadBoard.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream(BOARDSFOLDER + "/" + boardname + "." + JSON_EXT);
         System.out.println("LoadBoard " + BOARDSFOLDER + "/" + boardname + "." + JSON_EXT);

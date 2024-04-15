@@ -41,6 +41,8 @@ class Repository implements IRepository {
 	private static final String GAME_GAMEID = "gameID";
 
 	private static final String GAME_NAME = "name";
+
+	private static final String BOARD_NAME = "boardName";
 	
 	private static final String GAME_CURRENTPLAYER = "currentPlayer";
 
@@ -211,6 +213,7 @@ class Repository implements IRepository {
 				rs.updateInt(GAME_CURRENTPLAYER, game.getPlayerNumber(game.getCurrentPlayer()));
 				rs.updateInt(GAME_PHASE, game.getPhase().ordinal());
 				rs.updateInt(GAME_STEP, game.getStep());
+				rs.updateString(BOARD_NAME, LoadBoard.getGameBoard());
 				rs.updateRow();
 			} else {
 				// TODO error handling
@@ -270,9 +273,9 @@ class Repository implements IRepository {
 				// game = new Board(width,height);
 				// TODO and we should also store the used game board in the database
 				//      for now, we use the default game board
-				game = LoadBoard.loadBoard(null);
+				game = LoadBoard.loadBoard(rs.getString(BOARD_NAME));
 				if (game == null) {
-					return null;
+					game = LoadBoard.loadBoard(null);
 				}
 				playerNo = rs.getInt(GAME_CURRENTPLAYER);
 				// TODO currently we do not set the games name (needs to be added)
