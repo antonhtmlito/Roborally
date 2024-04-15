@@ -29,7 +29,7 @@ import javafx.scene.control.MenuItem;
 /**
  * ...
  *
- * @author Ekkart Kindler, ekki@dtu.dk, @author @s235460
+ * @author Ekkart Kindler, ekki@dtu.dk, @author Anton Fu Hou Dong, @s235460
  *
  */
 
@@ -49,7 +49,7 @@ public class RoboRallyMenuBar extends MenuBar {
      * This code constructs a menu  bar for the Roborally application.
      * This menu bar includes a "File" menu with options to start a new game, stop the current game,
      * save the current game, load a saved game, and exit the application.
-     * @author @s235460
+     * @author Anton Fu Hou Dong, @s235460
      *
      */
 

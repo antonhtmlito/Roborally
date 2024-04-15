@@ -45,10 +45,24 @@ public class LoadBoard {
     private static final String DEFAULTBOARD = "defaultboard";
     private static final String JSON_EXT = "json";
 
+    /**
+     * Retrieves the current game board name.
+     * This method provides access to the name of the game board currently in use.
+     * It checks which game board is loaded.
+     * @return The name of the current game board as a String.
+     * @author Anton Fu Hou Dong, s235460.
+     */
     public static String getGameBoard() {
         return gameBoard;
     }
 
+    /**
+     * Loads a game board configuration from a specified JSON file.
+     * @param boardname The name of the board to load. If null, the default board is loaded.
+     * @return The loaded Board object, or a new 8x8 board if the file does not exist.
+     * @throws IOException if an I/O error occurs during file reading.
+     * @author Anton Fu Hou Dong, s235460.
+     */
     public static Board loadBoard(String boardname) {
         if (boardname == null) {
             boardname = DEFAULTBOARD;
