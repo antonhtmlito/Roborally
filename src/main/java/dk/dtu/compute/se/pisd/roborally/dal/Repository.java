@@ -96,7 +96,7 @@ class Repository implements IRepository {
 	 * Constructs a Repository instance which acts as a bridge between the game's data model and the database.
 	 * It uses a given Connector instance to establish a connection to the database for executing SQL queries.
 	 * @param connector The Connector instance used to connect to the database.
-	 * @author @s235460
+	 * @author Anton Fu Hou Dong, @s235460
 	 */
 	Repository(Connector connector){
 		this.connector = connector;
@@ -107,7 +107,7 @@ class Repository implements IRepository {
 	 * It saves the game's basic information along with the state of each player.
 	 * * @param game The game state to be saved into the database.
 	 * * @return true if the game was successfully created in the database, false otherwise.
-	 * @author @s235460
+	 * @author Anton Fu Hou Dong, @s235460
 	 */
 	@Override
 	public boolean createGameInDB(Board game) {
@@ -185,7 +185,7 @@ class Repository implements IRepository {
 	 * This includes updating the current player, game phase, and step.
 	 * @param game The current state of the game to update in the database.
 	 * @return true if the update was successful, false otherwise.
-	 * @author @s235460
+	 * @author Anton Fu Hou Dong, @s235460
 	 */
 	@Override
 	public boolean updateGameInDB(Board game) {
@@ -238,7 +238,7 @@ class Repository implements IRepository {
 	 * It reconstructs the game state, including the board, players, and their positions.
 	 * @param id The unique identifier of the game to load from the database.
 	 * @return The loaded game as a Board instance, or null if the game could not be loaded.
-	 * @author @s235460
+	 * @author Anton Fu Hou Dong, @s235460
 	 */
 	@Override
 	public Board loadGameFromDB(int id) {
@@ -304,7 +304,7 @@ class Repository implements IRepository {
 	/**
 	 * Retrieves a list of all games stored in the database.
 	 * Each game is represented by a GameInDB instance, which includes its ID.
-	 * @author @s235460
+	 * @author Anton Fu Hou Dong, @s235460
 	 * @return A List of GameInDB instances representing all games available in the database.
 	 */
 	@Override
@@ -338,7 +338,7 @@ class Repository implements IRepository {
 	 * This includes their position, color, and other relevant attributes.
 	 * @param game The game whose players' states are to be saved.
 	 * @throws SQLException If there is an error during the database update process.
-	 * @author @s235460
+	 * @author Anton Fu Hou Dong, @s235460
 	 */
 
 	private void createPlayersInDB(Board game) throws SQLException {
@@ -414,7 +414,7 @@ class Repository implements IRepository {
 	 * and creates Player objects accordingly, adding them to the game.
 	 * @param game The game object for which players are being loaded from the database.
 	 * @throws SQLException If a database access error occurs or this method is called on a closed connection.
-	 * @author @s235460
+	 * @author Anton Fu Hou Dong, @s235460
 	 */
 	private void loadPlayersFromDB(Board game) throws SQLException {
 		String name, colour;
@@ -452,7 +452,7 @@ class Repository implements IRepository {
 	 * This method should be called to save the latest changes made to players' states.
 	 * @param game The game whose players' states are to be updated in the database.
 	 * @throws SQLException If there is an error during the database update process.
-	 * @author @s235460
+	 * @author Anton Fu Hou Dong, @s235460
 	 */
 	private void updatePlayersInDB(Board game) throws SQLException {
 		Player player;
@@ -481,7 +481,7 @@ class Repository implements IRepository {
 	 * SQL statement used to insert a new game into the database with specified attributes.
 	 * The statement inserts a new row into the 'Game' table with values for name, current player,
 	 * phase, and step.
-	 * @author @s235460
+	 * @author Anton Fu Hou Dong, @s235460
 	 */
 	private static final String SQL_INSERT_GAME = "INSERT INTO Game(name, currentPlayer, phase, step) VALUES (?, ?, ?, ?)";
 
