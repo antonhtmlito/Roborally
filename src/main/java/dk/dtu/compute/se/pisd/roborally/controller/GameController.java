@@ -284,76 +284,38 @@ public class GameController {
     public void moveForward(@NotNull Player player) {
 
         Space current = player.getSpace();
+        player.setMoved(true);
         Space target = board.getNeighbour(current, player.getHeading());
-
-        Space nextTarget = board.getNeighbour(target, player.getHeading());
-        Space T3Target   = board.getNeighbour(nextTarget, player.getHeading());
-        Space T4Target   = board.getNeighbour(T3Target, player.getHeading());
-        Space T5Target   = board.getNeighbour(T4Target, player.getHeading());
-        Space T6Target   = board.getNeighbour(T5Target, player.getHeading());
-
-        if (current.hasCurrentWall(player) || target.hasTargetWall(current.getPlayer())) {
-            System.out.println("Cannot move forward: Wall detected in the target space.");
+        Player targetPlayer;
+        targetPlayer = target.getPlayer();
+        if (current.hasCurrentWall(player)) {
+            player.setMoved(false);
+            System.out.println("Cannot move forward: Wall detected in the target space for player " + player.getName());
             return;
+        } else {
+            System.out.println("no wall ahead for player " + player.getName());
         }
 
-        if(target.getPlayer() != null) {
-            System.out.println("there is player " + target.getPlayer().getName() + " on the space, push the player!");
-            if (nextTarget.getPlayer() == null) {
-                if (nextTarget.hasCurrentWall(target.getPlayer())) {
-                    System.out.println("there is wall on the space, cannot push the player!");
-                    return;
-                }
-
-                // move both players
-                nextTarget.setPlayer(target.getPlayer());
-                player.setSpace(target);
+        if(targetPlayer != null) {
+            targetPlayer.setMoved(true);
+            System.out.println("there is player " + targetPlayer.getName() + " on the space, push the player!");
+            Heading tempHeading = target.getPlayer().getHeading();
+            targetPlayer.setHeading(player.getHeading());
+            if (!target.hasCurrentWall(targetPlayer)) {
+                System.out.println("no wall ahead for player " + targetPlayer.getName());
+                moveForward(targetPlayer);
+                targetPlayer.setHeading(tempHeading);
             } else {
-                System.out.println("there is player " + nextTarget.getPlayer().getName() + " on the next space!");
-                if (T3Target.getPlayer() == null) {
-                    if (T3Target.hasCurrentWall(nextTarget.getPlayer())) {
-                        System.out.println("there is wall on the space, cannot push the player!");
-                        return;
-                    }
-                    T3Target.setPlayer(nextTarget.getPlayer());
-                    nextTarget.setPlayer(target.getPlayer());
-                    player.setSpace(target);
-                } else {
-                    if (T4Target.getPlayer() == null) {
-                        if (T4Target.hasCurrentWall(T3Target.getPlayer())) {
-                            System.out.println("there is wall on the space, cannot push the player!");
-                            return;
-                        }
-                        T4Target.setPlayer(T3Target.getPlayer());
-                        T3Target.setPlayer(nextTarget.getPlayer());
-                        nextTarget.setPlayer(target.getPlayer());
-                        player.setSpace(target);
-                    } else {
-                        if (T5Target.getPlayer() == null) {
-                            if (T5Target.hasCurrentWall(T4Target.getPlayer())) {
-                                System.out.println("there is wall on the space, cannot push the player!");
-                                return;
-                            }
-                            T5Target.setPlayer(T4Target.getPlayer());
-                            T4Target.setPlayer(T3Target.getPlayer());
-                            T3Target.setPlayer(nextTarget.getPlayer());
-                            nextTarget.setPlayer(target.getPlayer());
-                            player.setSpace(target);
-                        } else {
-                            if (T6Target.hasCurrentWall(T5Target.getPlayer())) {
-                                System.out.println("there is wall on the space, cannot push the player!");
-                                return;
-                            }
-                            T6Target.setPlayer(T5Target.getPlayer());
-                            T5Target.setPlayer(T4Target.getPlayer());
-                            T4Target.setPlayer(T3Target.getPlayer());
-                            T3Target.setPlayer(nextTarget.getPlayer());
-                            nextTarget.setPlayer(target.getPlayer());
-                            player.setSpace(target);
-                        }
-                    }
-
-                }
+                System.out.println("There is wall ahead, no move for player " + targetPlayer.getName());
+                targetPlayer.setHeading(tempHeading);
+                targetPlayer.setMoved(false);
+            }
+            if(!targetPlayer.getMoved()) {
+                targetPlayer.setSpace(target);
+                player.setSpace(current);
+                player.setMoved(false);
+                System.out.println("Player " + player.getName() + "cannot move as target cannot move");
+                return;
             }
         }
         if (target.hasGear()) {
@@ -373,8 +335,10 @@ public class GameController {
             }
         }
         // nothing prevent move
-        player.setSpace(target);
-        System.out.println("++++++++  moveForward");
+        if(player.getMoved()) {
+            player.setSpace(target);
+            System.out.println("++++++++  moveForward");
+        }
     }
 
     /**

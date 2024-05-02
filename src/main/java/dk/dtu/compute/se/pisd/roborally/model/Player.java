@@ -54,6 +54,15 @@ public class Player extends Subject {
 
     private Stack<CommandCard> stack;
 
+    private boolean moved;
+
+    public void setMoved(boolean isMoved) {
+        moved = isMoved;
+    }
+
+    public boolean getMoved() {
+        return moved;
+    }
     public CommandCardField[] getCards() {
         return cards;
     }
