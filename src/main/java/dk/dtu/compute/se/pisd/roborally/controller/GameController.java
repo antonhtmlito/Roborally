@@ -37,7 +37,7 @@ import java.util.*;
  */
 public class GameController {
 
-    final public Board board;
+    public static Board board;
 
     private Set<Integer> allCheckpoints;
     private List<Player> players;
