@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.CheckPointFieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import javafx.application.Application;
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +31,10 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.HashSet;
+import java.util.Set;
+
 
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 
@@ -93,27 +98,6 @@ public class Board extends Subject {
         this(width, height, "defaultboard");
     }
 
-    /**
-     * This code gives the placement of the checkpoint on the board
-     *
-     * @author Martin Dahl Lund, s235454
-     */
-    public void initializeCheckpoints(){
-        int [][] checkpoints = {
-                {3, 5},
-                {4, 1},
-                {7, 3},
-        };
-             for (int i = 0; i < checkpoints.length; i++){
-                    int x = checkpoints[i][0];
-                    int y = checkpoints[i][1];
-
-            Space checkpointSpace = getSpace(x, y);
-            if (checkpointSpace != null) {
-                checkpointSpace.setCheckpoint(true);
-            }
-        }
-    }
 
     /**
      * Get game controller

@@ -122,6 +122,12 @@ public class Space extends Subject {
         actions = new ArrayList<>();
     }
 
+
+
+    public void addAction(FieldAction action){
+        actions.add(action);
+    }
+
     /**
      * Get player
      * @return Player

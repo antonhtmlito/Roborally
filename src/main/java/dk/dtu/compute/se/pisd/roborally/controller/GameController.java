@@ -27,6 +27,8 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.*;
+
 /**
  * ...
  * This is the class that controls the game
@@ -36,6 +38,11 @@ import org.jetbrains.annotations.NotNull;
 public class GameController {
 
     final public Board board;
+
+    private Set<Integer> allCheckpoints;
+    private List<Player> players;
+
+    private Set<Integer> collectedCheckpoints = new HashSet<>();
 
 
     public GameController(@NotNull Board board) {
@@ -272,6 +279,14 @@ public class GameController {
             }
         }
     }
+    public void collectedCheckpoints(int checkpointId){
+        collectedCheckpoints.add(checkpointId);
+    }
+    public boolean hasCollectedAllCheckpoints(Set<Integer> allCheckpoint){
+        return collectedCheckpoints.containsAll(allCheckpoint);
+    }
+
+
 
     /**
      * This method makes the player move forward when a "FWD" card has been played.
@@ -408,5 +423,26 @@ public class GameController {
         }
     }
 
+    public GameController(Board board,List<Player> players){
+        this.board = board;
+        this.players = players;
+        this.allCheckpoints = new HashSet<>();
+        initializeAllCheckpoints();
+    }
+    public void initializeAllCheckpoints(){
+        allCheckpoints.add(0);
+        allCheckpoints.add(1);
+        allCheckpoints.add(2);
+
+    }
+    public void collectedCheckpoint(Player player, int checkpointId){
+        player.collectedCheckpoints(checkpointId);
+        if (player.hasCollectedAllCheckpoints(allCheckpoints)){
+            endGame();
+        }
+    }
+    private void endGame(){
+        System.out.println("Game over! All checkpoints have been collected");
+    }
 
 }

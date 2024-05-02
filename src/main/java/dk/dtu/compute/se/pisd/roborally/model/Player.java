@@ -25,6 +25,8 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.view.PlayerView;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Stack;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
@@ -53,6 +55,8 @@ public class Player extends Subject {
     private CommandCardField[] cards;
 
     private Stack<CommandCard> stack;
+
+    private Set<Integer> collectedCheckpoints = new HashSet<>();
 
     private boolean moved;
 
@@ -96,6 +100,13 @@ public class Player extends Subject {
         }
 
         stack = new Stack<>();
+    }
+
+    public void collectedCheckpoints(int checkpointId){
+        collectedCheckpoints.add(checkpointId);
+    }
+    public boolean hasCollectedAllCheckpoints(Set<Integer> allCheckpoint){
+        return collectedCheckpoints.containsAll(allCheckpoint);
     }
 
     /**

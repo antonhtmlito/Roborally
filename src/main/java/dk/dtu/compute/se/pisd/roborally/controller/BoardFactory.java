@@ -56,6 +56,26 @@ public class BoardFactory {
         }
     }
 
+    /**
+     * This code gives the placement of the checkpoint on the board
+     * base on the coordinates in checkpointData
+     *
+     * @author Martin Dahl Lund, s235454
+     */
+    public void initializeCheckpoints(Board board, int[][] checkpointData) {
+        for (int[] checkpoint : checkpointData) {
+            int x = checkpoint[0];
+            int y = checkpoint[1];
+
+            Space checkpointSpace = board.getSpace(x, y);
+            if (checkpointSpace != null) {
+                CheckPointFieldAction checkPointFieldAction = new CheckPointFieldAction();
+                checkPointFieldAction.setCheckPointId(checkPointFieldAction.checkPointFieldId);
+                checkpointSpace.addAction((checkPointFieldAction));
+                checkpointSpace.setCheckpoint(true);
+            }
+        }
+    }
 
 
     /**
@@ -118,6 +138,18 @@ public class BoardFactory {
                 {2, 4},
         };
         setGearSpaces(board,gearSpaceCoordinates);
+
+        /**
+         * this code gives the coordinates used in the public void initializeCheckpoints
+         *
+         * @author Martin Dahl Lund, s235454
+         */
+        int [][] checkpointData ={
+                {3,5},
+                {4,1},
+                {7,3},
+        };
+        initializeCheckpoints(board, checkpointData);
 
         return board;
     }
