@@ -286,10 +286,77 @@ public class GameController {
         Space current = player.getSpace();
         Space target = board.getNeighbour(current, player.getHeading());
 
+        Space nextTarget = board.getNeighbour(target, player.getHeading());
+        Space T3Target   = board.getNeighbour(nextTarget, player.getHeading());
+        Space T4Target   = board.getNeighbour(T3Target, player.getHeading());
+        Space T5Target   = board.getNeighbour(T4Target, player.getHeading());
+        Space T6Target   = board.getNeighbour(T5Target, player.getHeading());
 
+        if (current.hasCurrentWall(player) || target.hasTargetWall(current.getPlayer())) {
+            System.out.println("Cannot move forward: Wall detected in the target space.");
+            return;
+        }
+
+        if(target.getPlayer() != null) {
+            System.out.println("there is player " + target.getPlayer().getName() + " on the space, push the player!");
+            if (nextTarget.getPlayer() == null) {
+                if (nextTarget.hasCurrentWall(target.getPlayer())) {
+                    System.out.println("there is wall on the space, cannot push the player!");
+                    return;
+                }
+
+                // move both players
+                nextTarget.setPlayer(target.getPlayer());
+                player.setSpace(target);
+            } else {
+                System.out.println("there is player " + nextTarget.getPlayer().getName() + " on the next space!");
+                if (T3Target.getPlayer() == null) {
+                    if (T3Target.hasCurrentWall(nextTarget.getPlayer())) {
+                        System.out.println("there is wall on the space, cannot push the player!");
+                        return;
+                    }
+                    T3Target.setPlayer(nextTarget.getPlayer());
+                    nextTarget.setPlayer(target.getPlayer());
+                    player.setSpace(target);
+                } else {
+                    if (T4Target.getPlayer() == null) {
+                        if (T4Target.hasCurrentWall(T3Target.getPlayer())) {
+                            System.out.println("there is wall on the space, cannot push the player!");
+                            return;
+                        }
+                        T4Target.setPlayer(T3Target.getPlayer());
+                        T3Target.setPlayer(nextTarget.getPlayer());
+                        nextTarget.setPlayer(target.getPlayer());
+                        player.setSpace(target);
+                    } else {
+                        if (T5Target.getPlayer() == null) {
+                            if (T5Target.hasCurrentWall(T4Target.getPlayer())) {
+                                System.out.println("there is wall on the space, cannot push the player!");
+                                return;
+                            }
+                            T5Target.setPlayer(T4Target.getPlayer());
+                            T4Target.setPlayer(T3Target.getPlayer());
+                            T3Target.setPlayer(nextTarget.getPlayer());
+                            nextTarget.setPlayer(target.getPlayer());
+                            player.setSpace(target);
+                        } else {
+                            if (T6Target.hasCurrentWall(T5Target.getPlayer())) {
+                                System.out.println("there is wall on the space, cannot push the player!");
+                                return;
+                            }
+                            T6Target.setPlayer(T5Target.getPlayer());
+                            T5Target.setPlayer(T4Target.getPlayer());
+                            T4Target.setPlayer(T3Target.getPlayer());
+                            T3Target.setPlayer(nextTarget.getPlayer());
+                            nextTarget.setPlayer(target.getPlayer());
+                            player.setSpace(target);
+                        }
+                    }
+
+                }
+            }
+        }
         if (target.hasGear()) {
-
-            player.setSpace(target);
             switch (player.getHeading()) {
                 case NORTH:
                     player.setHeading(Heading.EAST);
@@ -304,20 +371,10 @@ public class GameController {
                     player.setHeading(Heading.NORTH);
                     break;
             }
-            return;
         }
-
-        // Check if the target space has a wall
-        if (current.hasCurrentWall(player) || target.hasTargetWall(player)) {
-            System.out.println("Cannot move forward: Wall detected in the target space.");
-        } else {
-            // If there's no wall, move the player to the target space
-            player.setSpace(target);
-            System.out.println("++++++++  moveForward");
-        }
-
-
-
+        // nothing prevent move
+        player.setSpace(target);
+        System.out.println("++++++++  moveForward");
     }
 
     /**
