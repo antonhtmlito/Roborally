@@ -42,12 +42,17 @@ public class GameController {
     private Set<Integer> allCheckpoints;
     private List<Player> players;
 
-    private Set<Integer> collectedCheckpoints = new HashSet<>();
+    private static Set<Integer> collectedCheckpoints = new HashSet<>();
 
-
+    public static Set<Integer> getCollectedCheckpoints() {
+        return collectedCheckpoints;
+    }
     public GameController(@NotNull Board board) {
         this.board = board;
         board.setGameController(this);
+        collectedCheckpoints.add(0);
+        collectedCheckpoints.add(1);
+        collectedCheckpoints.add(2);
     }
 
     /**
@@ -279,11 +284,9 @@ public class GameController {
             }
         }
     }
-    public void collectedCheckpoints(int checkpointId){
-        collectedCheckpoints.add(checkpointId);
-    }
-    public boolean hasCollectedAllCheckpoints(Set<Integer> allCheckpoint){
-        return collectedCheckpoints.containsAll(allCheckpoint);
+
+    public static boolean hasCollectedAllCheckpoints(Set<Integer> checkpoints){
+        return collectedCheckpoints.containsAll(checkpoints);
     }
 
 

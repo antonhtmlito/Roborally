@@ -1,5 +1,6 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 
@@ -24,7 +25,11 @@ public class CheckPointFieldAction extends FieldAction{
         Player player = space.getPlayer();
         if (player != null) {
             System.out.println("CheckPointFieldAction player " + player.getName() + " reach check point " + checkPointFieldId);
-            return true;
+            player.collectedCheckpoints(checkPointFieldId);
+            if(player.hasCollectedAllCheckpoints(GameController.getCollectedCheckpoints())) {
+                System.out.println("player " + player.getName() + " has collected all checkpoints");
+                //System.exit(0);
+            }
         }
         return false;
     }

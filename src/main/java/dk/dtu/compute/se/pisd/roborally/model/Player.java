@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.view.PlayerView;
 import org.jetbrains.annotations.NotNull;
 
@@ -106,8 +107,9 @@ public class Player extends Subject {
         collectedCheckpoints.add(checkpointId);
     }
     public boolean hasCollectedAllCheckpoints(Set<Integer> allCheckpoint){
-        return collectedCheckpoints.containsAll(allCheckpoint);
+        return collectedCheckpoints.containsAll(GameController.getCollectedCheckpoints());
     }
+
 
     /**
      * Get name
