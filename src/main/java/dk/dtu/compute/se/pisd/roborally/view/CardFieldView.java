@@ -38,7 +38,8 @@ import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ...
+ * This is the CardFieldView class for the RoboRally Game.
+ * It shows the Programming cards and makes it possible to drag and drop them between fields.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -67,6 +68,11 @@ public class CardFieldView extends GridPane implements ViewObserver {
 
     private GameController gameController;
 
+    /**
+     *
+     * @param gameController
+     * @param field
+     */
     public CardFieldView(@NotNull GameController gameController, @NotNull CommandCardField field) {
         this.gameController = gameController;
         this.field = field;
