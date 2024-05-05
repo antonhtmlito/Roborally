@@ -24,11 +24,13 @@ public class CheckPointFieldAction extends FieldAction{
         Player player = space.getPlayer();
         if (player != null) {
             System.out.println("CheckPointFieldAction player " + player.getName() + " reach check point " + checkPointFieldId);
-            player.collectedCheckpoints(checkPointFieldId);
-            if(player.hasCollectedAllCheckpoints(GameController.getCollectedCheckpoints())) {
-                System.out.println("player " + player.getName() + " has collected all checkpoints");
-                AppController.saveGame();
-                System.exit(0);
+            if((player.getCollectedTokens()) == checkPointFieldId) {
+                player.collectedCheckpoints(checkPointFieldId);
+                if (player.hasCollectedAllCheckpoints(GameController.getCollectedCheckpoints())) {
+                    System.out.println("player " + player.getName() + " has collected all checkpoints");
+                    AppController.saveGame();
+                    System.exit(0);
+                }
             }
         }
         return false;

@@ -104,10 +104,15 @@ public class Player extends Subject {
     }
 
     public void collectedCheckpoints(int checkpointId){
-        collectedCheckpoints.add(checkpointId);
+        if(!collectedCheckpoints.contains(checkpointId))
+            collectedCheckpoints.add(checkpointId);
     }
     public boolean hasCollectedAllCheckpoints(Set<Integer> allCheckpoint){
         return collectedCheckpoints.containsAll(GameController.getCollectedCheckpoints());
+    }
+
+    public int getCollectedTokens() {
+        return collectedCheckpoints.size();
     }
 
 

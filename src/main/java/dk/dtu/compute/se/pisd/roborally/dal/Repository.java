@@ -64,6 +64,8 @@ class Repository implements IRepository {
 
 	private static final String PLAYER_HEADING = "heading";
 
+	private static final String CHECK_POINT_TOKENs = "checkpointTokens";
+
 	private static final int FIELD_TYPE_REGISTER = 0;
 
 	private static final int FIELD_TYPE_HAND = 1;
@@ -162,7 +164,6 @@ class Repository implements IRepository {
 				connection.setAutoCommit(true);
 				return true;
 			} catch (SQLException e) {
-				// TODO error handling
 				e.printStackTrace();
 				System.err.println("Some DB error");
 				
@@ -170,7 +171,6 @@ class Repository implements IRepository {
 					connection.rollback();
 					connection.setAutoCommit(true);
 				} catch (SQLException e1) {
-					// TODO error handling
 					e1.printStackTrace();
 				}
 			}
@@ -468,6 +468,7 @@ class Repository implements IRepository {
 			rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
 			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
 			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
+			rs.updateInt(CHECK_POINT_TOKENs, player.getCollectedTokens());
 			// TODO error handling
 			// TODO take care of case when number of players changes, etc
 			rs.updateRow();
