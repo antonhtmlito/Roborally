@@ -51,8 +51,13 @@ public class BoardView extends VBox implements ViewObserver {
 
     private Label statusLabel;
 
-    private SpaceEventHandler spaceEventHandler;
-
+    /**
+     * Constructs a new BoardView instance with the given GameController.
+     * Initializes the view components including the main board pane, players view and status lavel.
+     * Attaches the BoardView instance to the GameController to receive updates via the observer.
+     *
+     * @param gameController
+     */
     public BoardView(@NotNull GameController gameController) {
         board = gameController.board;
 
@@ -66,15 +71,12 @@ public class BoardView extends VBox implements ViewObserver {
 
         spaces = new SpaceView[board.width][board.height];
 
-        spaceEventHandler = new SpaceEventHandler(gameController);
-
         for (int x = 0; x < board.width; x++) {
             for (int y = 0; y < board.height; y++) {
                 Space space = board.getSpace(x, y);
                 SpaceView spaceView = new SpaceView(space);
                 spaces[x][y] = spaceView;
                 mainBoardPane.add(spaceView, x, y);
-                spaceView.setOnMouseClicked(spaceEventHandler);
             }
         }
 
@@ -82,6 +84,10 @@ public class BoardView extends VBox implements ViewObserver {
         update(board);
     }
 
+    /**
+     * Updates the view based on changes in the observed subject
+     * @param subject
+     */
     @Override
     public void updateView(Subject subject) {
         if (subject == board) {
@@ -89,32 +95,4 @@ public class BoardView extends VBox implements ViewObserver {
             statusLabel.setText(board.getStatusMessage());
         }
     }
-
-    // XXX this handler and its uses should eventually be deleted! This is just to help test the
-    //     behaviour of the game by being able to explicitly move the players on the board!
-    private class SpaceEventHandler implements EventHandler<MouseEvent> {
-
-        final public GameController gameController;
-
-        public SpaceEventHandler(@NotNull GameController gameController) {
-            this.gameController = gameController;
-        }
-
-        @Override
-        public void handle(MouseEvent event) {
-            Object source = event.getSource();
-            if (source instanceof SpaceView) {
-                SpaceView spaceView = (SpaceView) source;
-                Space space = spaceView.space;
-                Board board = space.board;
-
-                if (board == gameController.board) {
-                    gameController.moveCurrentPlayerToSpace(space);
-                    event.consume();
-                }
-            }
-        }
-
-    }
-
 }
