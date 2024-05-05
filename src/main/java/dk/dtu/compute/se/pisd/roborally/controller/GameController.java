@@ -39,14 +39,35 @@ public class GameController {
 
     public static Board board;
 
+    /**
+     * Set of all the checkpoint that need to be collected to win.
+     */
     private Set<Integer> allCheckpoints;
+
+    /**
+     * List of players
+     */
     private List<Player> players;
 
+    /**
+     * Static set the checkpoints that has been collected.
+     */
     private static Set<Integer> collectedCheckpoints = new HashSet<>();
 
+    /**
+     * Retrieves the set of the collected checkpoints.
+     *
+     * @return
+     */
     public static Set<Integer> getCollectedCheckpoints() {
         return collectedCheckpoints;
     }
+
+    /**
+     * Constructs a new GameController.
+     *
+     * @param board
+     */
     public GameController(@NotNull Board board) {
         this.board = board;
         board.setGameController(this);
@@ -158,7 +179,9 @@ public class GameController {
         continuePrograms();
     }
 
-    // XXX: V2
+    /**
+     * This is executing program step, if the board is in the activation phase.
+     */
     private void continuePrograms() {
         do {
             executeNextStep();
@@ -225,9 +248,9 @@ public class GameController {
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
-                    for (Player player : board.getPlayers()){
+                    for (Player player : board.getPlayers()) {
                         Space space = player.getSpace();
-                        if (!space.getActions().isEmpty()){
+                        if (!space.getActions().isEmpty()) {
                             for (FieldAction fieldAction : space.getActions()) {
                                 fieldAction.doAction(board.getGameController(), space);
                             }
@@ -283,10 +306,9 @@ public class GameController {
         }
     }
 
-    public static boolean hasCollectedAllCheckpoints(Set<Integer> checkpoints){
+    public static boolean hasCollectedAllCheckpoints(Set<Integer> checkpoints) {
         return collectedCheckpoints.containsAll(checkpoints);
     }
-
 
 
     /**
@@ -312,25 +334,25 @@ public class GameController {
             //System.out.println("no wall ahead for player " + player.getName());
         }
 
-        if(targetPlayer != null) {
+        if (targetPlayer != null) {
             targetPlayer.setMoved(true);
             //System.out.println("there is player " + targetPlayer.getName() + " on the space, push the player!");
             Heading tempHeading = target.getPlayer().getHeading();
             targetPlayer.setHeading(player.getHeading());
             if (!target.hasCurrentWall(targetPlayer)) {
-               // System.out.println("no wall ahead for player " + targetPlayer.getName());
+                // System.out.println("no wall ahead for player " + targetPlayer.getName());
                 moveForward(targetPlayer);
                 targetPlayer.setHeading(tempHeading);
             } else {
-               // System.out.println("There is wall ahead, no move for player " + targetPlayer.getName());
+                // System.out.println("There is wall ahead, no move for player " + targetPlayer.getName());
                 targetPlayer.setHeading(tempHeading);
                 targetPlayer.setMoved(false);
             }
-            if(!targetPlayer.getMoved()) {
+            if (!targetPlayer.getMoved()) {
                 targetPlayer.setSpace(target);
                 player.setSpace(current);
                 player.setMoved(false);
-               // System.out.println("Player " + player.getName() + "cannot move as target cannot move");
+                // System.out.println("Player " + player.getName() + "cannot move as target cannot move");
                 return;
             }
         }
@@ -351,7 +373,7 @@ public class GameController {
             }
         }
         // nothing prevent move
-        if(player.getMoved()) {
+        if (player.getMoved()) {
             player.setSpace(target);
             //System.out.println("++++++++  moveForward");
         }
@@ -423,27 +445,4 @@ public class GameController {
             return false;
         }
     }
-
-    public GameController(Board board,List<Player> players){
-        this.board = board;
-        this.players = players;
-        this.allCheckpoints = new HashSet<>();
-        initializeAllCheckpoints();
-    }
-    public void initializeAllCheckpoints(){
-        allCheckpoints.add(0);
-        allCheckpoints.add(1);
-        allCheckpoints.add(2);
-
-    }
-    public void collectedCheckpoint(Player player, int checkpointId){
-        player.collectedCheckpoints(checkpointId);
-        if (player.hasCollectedAllCheckpoints(allCheckpoints)){
-            endGame();
-        }
-    }
-    private void endGame(){
-        System.out.println("Game over! All checkpoints have been collected");
-    }
-
 }

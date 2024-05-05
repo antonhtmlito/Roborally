@@ -56,7 +56,9 @@ public class AppController implements Observer {
 
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
-
+    /**
+     * This adds 3 different boards to the game.
+     */
     final private List<String> PLAYER_BOARDS = Arrays.asList("defaultboard", "easyBoard", "hardBoard");
     final private RoboRally roboRally;
 

@@ -14,15 +14,32 @@ public class CheckPointFieldAction extends FieldAction{
        // System.out.println("CheckPointFieldAction");
     }
 
+    /**
+     * This collects the checkpoint ID.
+     * @return
+     */
     public int getCheckPointFieldId() {
         return checkPointFieldId;
     }
 
+    /**
+     * This sets the checkpoint ID.
+     *
+     * @param checkPointFieldId
+     */
     public void setCheckPointId(int checkPointFieldId) {
         this.checkPointFieldId = checkPointFieldId;
     }
 
-
+    /**
+     * This check if the player has reached a checkpoint by comparing the checkpoint ID
+     * with the space the player has landed on.
+     * It also determines if all the checkpoints has been collected, and if so the game will end.
+     *
+     * @param gameController the gameController of the respective game
+     * @param space the space this action should be executed for
+     * @return
+     */
     public boolean doAction(GameController gameController, Space space) {
         //System.out.println("CheckPointFieldAction doAction()");
         Player player = space.getPlayer();
