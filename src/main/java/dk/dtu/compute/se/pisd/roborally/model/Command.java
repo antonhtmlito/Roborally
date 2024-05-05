@@ -40,7 +40,6 @@ public enum Command {
     LEFT("Turn Left"),
     FAST_FORWARD("Fast Fwd"),
 
-    // XXX Assignment V3
     OPTION_LEFT_RIGHT("Left OR Right", LEFT, RIGHT);
 
     final public String displayName;
@@ -78,6 +77,11 @@ public enum Command {
         return options;
     }
 
+    /**
+     * Get command
+     * @param index
+     * @return
+     */
     public static Command getCommand(int index){
         Command command = null;
         switch (index) {

@@ -50,6 +50,10 @@ public class CommandCard extends Subject {
         return command.displayName;
     }
 
+    /**
+     * Get command
+     * @return
+     */
     public Command getCommand() {
         return command;
     }

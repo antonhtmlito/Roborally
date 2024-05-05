@@ -61,17 +61,34 @@ public class Player extends Subject {
 
     private boolean moved;
 
+    /**
+     * setter for whether a player is moved or not
+     * @param isMoved
+     */
     public void setMoved(boolean isMoved) {
         moved = isMoved;
     }
 
+    /**
+     * getter for whether a player is moved or not
+     * @return
+     */
     public boolean getMoved() {
         return moved;
     }
+
+    /**
+     * getter for cards
+     * @return
+     */
     public CommandCardField[] getCards() {
         return cards;
     }
 
+    /**
+     * getter for program
+     * @return
+     */
     public CommandCardField[] getProgram() {
         return program;
     }
@@ -103,14 +120,28 @@ public class Player extends Subject {
         stack = new Stack<>();
     }
 
+    /**
+     * adds the checkpoint to the player's collected checkpoints
+     * @param checkpointId
+     */
     public void collectedCheckpoints(int checkpointId){
         if(!collectedCheckpoints.contains(checkpointId))
             collectedCheckpoints.add(checkpointId);
     }
+
+    /**
+     * checks if the player has collected all checkpoints
+     * @param allCheckpoint
+     * @return
+     */
     public boolean hasCollectedAllCheckpoints(Set<Integer> allCheckpoint){
         return collectedCheckpoints.containsAll(GameController.getCollectedCheckpoints());
     }
 
+    /**
+     * retrieves the number of collected checkpoints by the player
+     * @return
+     */
     public int getCollectedTokens() {
         return collectedCheckpoints.size();
     }
@@ -162,11 +193,19 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * retrieved player's ID
+     * @return
+     */
     public int getPlayerId() {
         return playerId;
     }
 
 
+    /**
+     * sets the player's ID
+     * @param id
+     */
     public void setPlayerId(int id) {
         playerId = id;
     }
@@ -244,6 +283,10 @@ public class Player extends Subject {
         return cards[i];
     }
 
+    /**
+     * Gets the card deck
+     * @return
+     */
     public Stack<CommandCard> getCardDeck() {
         return stack;
     }

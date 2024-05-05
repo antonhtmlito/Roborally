@@ -88,6 +88,11 @@ public class Space extends Subject {
         return false;
     }
 
+    /**
+     * Checks if the target has a wall
+     * @param player
+     * @return
+     */
     public boolean hasTargetWall(Player player) {
         var heading = player.getHeading();
         if(EAST.equals(heading)){
@@ -166,14 +171,27 @@ public class Space extends Subject {
         notifyChange();
     }
 
+    /**
+     * sets whether a space has a gear on it or not
+     * @param hasGear
+     */
     public void setHasGear(boolean hasGear) {
         this.hasGear = hasGear;
     }
+
+    /**
+     * checks if a space has a gear
+     * @return
+     */
     public boolean hasGear() {
         return hasGear;
     }
 
 
+    /**
+     * checks if there's a wall
+     * @return
+     */
     public List<Heading> getWalls() {
         return walls;
     }
