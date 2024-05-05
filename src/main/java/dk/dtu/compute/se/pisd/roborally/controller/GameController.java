@@ -73,8 +73,6 @@ public class GameController {
         board.setCounter(board.getCounter() + 1);
     }
 
-    // XXX: V2
-
     /**
      * This method starts the programming phase
      */
@@ -208,7 +206,7 @@ public class GameController {
      *
      * @author Jonas Woetmann Larsen, S235446
      */
-    private void executeNextStep() {
+    void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
             int step = board.getStep();

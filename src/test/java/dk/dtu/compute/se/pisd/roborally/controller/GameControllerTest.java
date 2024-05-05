@@ -4,6 +4,9 @@ import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.model.Phase;
+import dk.dtu.compute.se.pisd.roborally.model.Command;
+import dk.dtu.compute.se.pisd.roborally.model.CommandCardField;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,20 +36,6 @@ class GameControllerTest {
     void tearDown() {
         gameController = null;
     }
-
-    /**
-     * Test for Assignment V1 (can be delete later once V1 was shown to the teacher)
-     */
-    @Test
-    void testV1() {
-        Board board = gameController.board;
-
-        Player player = board.getCurrentPlayer();
-        gameController.moveCurrentPlayerToSpace(board.getSpace(0, 4));
-
-        Assertions.assertEquals(player, board.getSpace(0, 4).getPlayer(), "Player " + player.getName() + " should beSpace (0,4)!");
-    }
-
 
 
     @Test
@@ -107,6 +96,28 @@ class GameControllerTest {
         Assertions.assertNotNull(board.getSpace(0, 0).getPlayer(), "Space (0,0) should not be empty!");
     }
 
+    @Test
+    void testStartProgrammingPhase() {
+        gameController.startProgrammingPhase();
+        Assertions.assertEquals(Phase.PROGRAMMING, gameController.board.getPhase(), "Phase should be set to PROGRAMMING");
+        Assertions.assertEquals(gameController.board.getPlayer(0), gameController.board.getCurrentPlayer(), "Current player should be the first player");
+        // Add more assertions as needed to check the state after starting the programming phase
+    }
 
+    @Test
+    void testFinishProgrammingPhase() {
+        // Setup the board state as needed before calling finishProgrammingPhase
+        gameController.finishProgrammingPhase();
+        Assertions.assertEquals(Phase.ACTIVATION, gameController.board.getPhase(), "Phase should be set to ACTIVATION");
+        Assertions.assertEquals(gameController.board.getPlayer(0), gameController.board.getCurrentPlayer(), "Current player should be the first player");
+        // Add more assertions as needed to check the state after finishing the programming phase
+    }
 
+    @Test
+    void testExecuteCommandOptionAndContinue() {
+        // Setup the board state as needed before calling executeCommandOptionAndContinue
+        Command option = Command.FORWARD; // Provide a command option for testing
+        gameController.executeCommandOptionAndContinue(option);
+        // Add assertions to verify that command options are executed correctly
+    }
 }

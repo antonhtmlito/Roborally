@@ -73,6 +73,7 @@ public class Board extends Subject {
      * @param width int
      * @param height int
      * @param boardName String
+     *
      */
     public Board(int width, int height, @NotNull String boardName) {
         this.boardName = boardName;
@@ -308,12 +309,6 @@ public class Board extends Subject {
      * @return String
      */
     public String getStatusMessage() {
-        // this is actually a view aspect, but for making assignment V1 easy for
-        // the students, this method gives a string representation of the current
-        // status of the game
-
-        // XXX: V1 add the move count to the status message
-        // XXX: V2 changed the status so that it shows the phase, the current player and the number of steps
         return "Player = " + getCurrentPlayer().getName() + ", number of moves: " + getCounter();
     }
 
