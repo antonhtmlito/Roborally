@@ -34,7 +34,7 @@ import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ...
+ * This is the PlayerView class of the RoboRally Game
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -92,10 +92,6 @@ public class PlayerView extends Tab implements ViewObserver {
                 programPane.add(programCardViews[i], i, 0);
             }
         }
-
-        // XXX  the following buttons should actually not be on the tabs of the individual
-        //      players, but on the PlayersView (view for all players). This should be
-        //      refactored.
 
         finishButton = new Button("Finish Programming");
         finishButton.setOnAction( e -> gameController.finishProgrammingPhase());
@@ -173,8 +169,6 @@ public class PlayerView extends Tab implements ViewObserver {
                 switch (player.board.getPhase()) {
                     case INITIALISATION:
                         finishButton.setDisable(true);
-                        // XXX just to make sure that there is a way for the player to get
-                        //     from the initialization phase to the programming phase somehow!
                         executeButton.setDisable(false);
                         stepButton.setDisable(true);
                         break;

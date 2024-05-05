@@ -28,7 +28,8 @@ import dk.dtu.compute.se.pisd.roborally.model.Player;
 import javafx.scene.control.TabPane;
 
 /**
- * ...
+ * This is the PlayersView class of the RoboRally Game
+ *
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *

@@ -44,7 +44,7 @@ import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ...
+ *  * This is the SpaceView class of the RoboRally Game
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  */

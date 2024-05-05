@@ -69,7 +69,8 @@ public class CardFieldView extends GridPane implements ViewObserver {
     private GameController gameController;
 
     /**
-     *
+     * Constructs a new instance of CardFieldView and initializes the view components.
+     * Attaches the CardFieldView instance to the CommandCardField to receive updates via the observer
      * @param gameController
      * @param field
      */
@@ -106,6 +107,11 @@ public class CardFieldView extends GridPane implements ViewObserver {
         update(field);
     }
 
+    /**
+     * creates a string representation of the given commandCardField
+     * @param cardField
+     * @return
+     */
     private String cardFieldRepresentation(CommandCardField cardField) {
         if (cardField.player != null) {
 
@@ -127,6 +133,11 @@ public class CardFieldView extends GridPane implements ViewObserver {
 
     }
 
+    /**
+     * Converts a string representation to a CommandCardField.
+     * @param rep
+     * @return
+     */
     private CommandCardField cardFieldFromRepresentation(String rep) {
         if (rep != null && field.player != null) {
             String[] strings = rep.split(",");
@@ -146,6 +157,10 @@ public class CardFieldView extends GridPane implements ViewObserver {
         return null;
     }
 
+    /**
+     * updates the view of the cards
+     * @param subject
+     */
     @Override
     public void updateView(Subject subject) {
         if (subject == field && subject != null) {
@@ -187,6 +202,9 @@ public class CardFieldView extends GridPane implements ViewObserver {
 
     }
 
+    /**
+     *
+     */
     private class OnDragOverHandler implements EventHandler<DragEvent> {
 
         @Override

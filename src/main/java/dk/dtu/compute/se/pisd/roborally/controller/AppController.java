@@ -122,7 +122,6 @@ public class AppController implements Observer {
                 player.setSpace(board.getSpace(i % board.width, i));
             }
 
-            // XXX: V2
             // board.setCurrentPlayer(board.getPlayer(0));
             gameController.startProgrammingPhase();
 
@@ -139,8 +138,6 @@ public class AppController implements Observer {
     }
 
     public void loadGame() {
-        // XXX needs to be implememted eventually
-        // for now, we just create a new game
 
         ArrayList<Integer> gameIds = RepositoryAccess.getRepository().getGameIds();
 

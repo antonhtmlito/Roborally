@@ -129,7 +129,6 @@ public class GameController {
     /**
      * This concludes the programming phase
      */
-    // XXX: V2
     public void finishProgrammingPhase() {
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
@@ -138,7 +137,6 @@ public class GameController {
         board.setStep(0);
     }
 
-    // XXX: V2
 
     private void makeProgramFieldsVisible(int register) {
         if (register >= 0 && register < Player.NO_REGISTERS) {
@@ -150,7 +148,7 @@ public class GameController {
         }
     }
 
-    // XXX: V2
+
     private void makeProgramFieldsInvisible() {
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             Player player = board.getPlayer(i);
@@ -161,7 +159,7 @@ public class GameController {
         }
     }
 
-    // XXX: V2
+
 
     /**
      * This method executes the programs.
