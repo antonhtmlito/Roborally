@@ -35,7 +35,8 @@ import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ...
+ * This is the BoardView class for the RoboRally game.
+ * It updates the playing board based on the GameController
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
