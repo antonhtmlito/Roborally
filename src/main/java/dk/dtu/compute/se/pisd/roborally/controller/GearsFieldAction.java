@@ -10,17 +10,17 @@ public class GearsFieldAction extends FieldAction{
     public Heading heading;
 
     public GearsFieldAction(){
-        System.out.println("GearsFieldAction");
+       // System.out.println("GearsFieldAction");
     }
 
 
     public Heading getHeading(){
-        System.out.println("getHeading");
+       // System.out.println("getHeading");
         return heading;
     }
 
     public void setHeading(Heading heading){
-        System.out.println("setHeading");
+       // System.out.println("setHeading");
         this.heading = heading;
     }
 

@@ -84,12 +84,12 @@ public class SpaceView extends StackPane implements ViewObserver {
         if(!space.getActions().isEmpty()) {
             FieldAction fieldAction = space.getActions().get(0);
             if(fieldAction instanceof GearsFieldAction) {
-                System.out.println("space on " + space.x + "," + space.y + " has GearsFieldAction");
+                //System.out.println("space on " + space.x + "," + space.y + " has GearsFieldAction");
                 addGearSymbol();
             } else if(fieldAction instanceof CheckPointFieldAction) {
                 space.setCheckpoint(true);
                 updateCheckpoint();
-                System.out.println("space on " + space.x + "," + space.y + " has CheckPointFieldAction");
+               // System.out.println("space on " + space.x + "," + space.y + " has CheckPointFieldAction");
             }
         }
     }
@@ -224,7 +224,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             gc.fillOval(SPACE_WIDTH * 0.2, SPACE_HEIGHT * 0.2, SPACE_WIDTH * 0.6, SPACE_HEIGHT * 0.6);
             gc.setFill(Color.RED);
             CheckPointFieldAction cpfa = (CheckPointFieldAction) space.getActions().get(0);
-            System.out.println("CheckPointFieldAction id " + cpfa.getCheckPointFieldId());
+           // System.out.println("CheckPointFieldAction id " + cpfa.getCheckPointFieldId());
             gc.fillText(cpfa.getCheckPointFieldId() + "", 15, 20, 44);
             this.getChildren().add(canvas);
         }

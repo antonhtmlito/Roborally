@@ -308,23 +308,23 @@ public class GameController {
         targetPlayer = target.getPlayer();
         if (current.hasCurrentWall(player)) {
             player.setMoved(false);
-            System.out.println("Cannot move forward: Wall detected in the target space for player " + player.getName());
+            //System.out.println("Cannot move forward: Wall detected in the target space for player " + player.getName());
             return;
         } else {
-            System.out.println("no wall ahead for player " + player.getName());
+            //System.out.println("no wall ahead for player " + player.getName());
         }
 
         if(targetPlayer != null) {
             targetPlayer.setMoved(true);
-            System.out.println("there is player " + targetPlayer.getName() + " on the space, push the player!");
+            //System.out.println("there is player " + targetPlayer.getName() + " on the space, push the player!");
             Heading tempHeading = target.getPlayer().getHeading();
             targetPlayer.setHeading(player.getHeading());
             if (!target.hasCurrentWall(targetPlayer)) {
-                System.out.println("no wall ahead for player " + targetPlayer.getName());
+               // System.out.println("no wall ahead for player " + targetPlayer.getName());
                 moveForward(targetPlayer);
                 targetPlayer.setHeading(tempHeading);
             } else {
-                System.out.println("There is wall ahead, no move for player " + targetPlayer.getName());
+               // System.out.println("There is wall ahead, no move for player " + targetPlayer.getName());
                 targetPlayer.setHeading(tempHeading);
                 targetPlayer.setMoved(false);
             }
@@ -332,7 +332,7 @@ public class GameController {
                 targetPlayer.setSpace(target);
                 player.setSpace(current);
                 player.setMoved(false);
-                System.out.println("Player " + player.getName() + "cannot move as target cannot move");
+               // System.out.println("Player " + player.getName() + "cannot move as target cannot move");
                 return;
             }
         }
@@ -355,7 +355,7 @@ public class GameController {
         // nothing prevent move
         if(player.getMoved()) {
             player.setSpace(target);
-            System.out.println("++++++++  moveForward");
+            //System.out.println("++++++++  moveForward");
         }
     }
 
@@ -367,7 +367,7 @@ public class GameController {
      * @author Jonas Woetmann Larsen, S235446
      */
     public void fastForward(@NotNull Player player) {
-        System.out.println("++++++++  fastForward");
+        //System.out.println("++++++++  fastForward");
         moveForward(player);
         moveForward(player);
     }
@@ -378,7 +378,7 @@ public class GameController {
      * @param player Player
      */
     public void turnRight(@NotNull Player player) {
-        System.out.println("++++++++  turnRight");
+        //System.out.println("++++++++  turnRight");
         if (player.getHeading() == Heading.SOUTH)
             player.setHeading(Heading.WEST);
         else if (player.getHeading() == Heading.NORTH)
@@ -395,7 +395,7 @@ public class GameController {
      * @param player Player
      */
     public void turnLeft(@NotNull Player player) {
-        System.out.println("++++++++  turnLeft");
+        //System.out.println("++++++++  turnLeft");
         if (player.getHeading() == Heading.SOUTH)
             player.setHeading(Heading.EAST);
         else if (player.getHeading() == Heading.NORTH)
@@ -417,7 +417,7 @@ public class GameController {
         CommandCard sourceCard = source.getCard();
         CommandCard targetCard = target.getCard();
         if (sourceCard != null && targetCard == null) {
-            System.out.println("++++++++  233");
+            //System.out.println("++++++++  233");
             target.setCard(sourceCard);
             source.setCard(null);
             return true;

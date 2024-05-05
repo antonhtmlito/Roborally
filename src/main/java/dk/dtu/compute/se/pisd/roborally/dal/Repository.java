@@ -606,7 +606,7 @@ class Repository implements IRepository {
 	 * @param game Board
 	 */
 	private void updateCardStacksInDB(Board game) {
-		System.out.println("  updateCardStacksInDB start. ");
+		//System.out.println("  updateCardStacksInDB start. ");
 		Connection connection = connector.getConnection();
 		try {
 			connection.setAutoCommit(false);
@@ -621,7 +621,7 @@ class Repository implements IRepository {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("  updateCardStacksInDB end. ");
+		//System.out.println("  updateCardStacksInDB end. ");
 	}
 
 	/**

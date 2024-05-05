@@ -48,7 +48,7 @@ public class Connector {
     private Connection connection;
         
     public Connector() {
-		System.out.println("Start connector");
+		//System.out.println("Start connector");
         try {
 			// String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
 			String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?serverTimezone=UTC";
@@ -60,11 +60,11 @@ public class Connector {
 			e.printStackTrace();
 			// Platform.exit();
 		}
-		System.out.println("End connector");
+		//System.out.println("End connector");
     }
     
     private void createDatabaseSchema(String url) {
-		System.out.println("start createDatabaseSchema " + url);
+		//System.out.println("start createDatabaseSchema " + url);
     	String createTablesStatement =
 				IOUtil.readResource(url);
 
@@ -90,7 +90,7 @@ public class Connector {
 				connection.setAutoCommit(true);
 			} catch (SQLException e) {}
 		}
-		System.out.println("end createDatabaseSchema");
+		//System.out.println("end createDatabaseSchema");
     }
     
     Connection getConnection() {

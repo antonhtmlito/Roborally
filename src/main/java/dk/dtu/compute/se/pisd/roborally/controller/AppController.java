@@ -97,7 +97,7 @@ public class AppController implements Observer {
 
             if (boardResult.isPresent()) {
                 if (boardChoice.getResult() == PLAYER_BOARDS.get(0)) {
-                    System.out.println("Choose default board");
+                    //System.out.println("Choose default board");
                     board = LoadBoard.loadBoard(PLAYER_BOARDS.get(0));
                 } else if (boardChoice.getResult() == PLAYER_BOARDS.get(1)) {
                     board = LoadBoard.loadBoard(PLAYER_BOARDS.get(1));
